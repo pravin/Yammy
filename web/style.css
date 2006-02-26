@@ -1,0 +1,168 @@
+/*
+Theme Name: Dee
+Theme URI: http://yammy.sourceforge.net/
+Description: Wordpress theme intended for Yammy
+Version: 0.1
+Author: Pravin Paratey
+Author URI: http://pravin.sourceforge.net/
+*/
+body {
+	margin:0;
+	padding:0;
+	font:10pt/1.6em Verdana, Sans-serif;
+	text-align:center;
+	color:#000;
+	background:#fff url('bg.gif');
+}
+
+td {
+	font:10pt/1.6em Verdana, Sans-serif;
+}
+
+.container {
+	width:750px;
+	margin:0 auto;
+	text-align:left;
+	color:#333;
+	position:relative;
+}
+
+/* -- Links -- */
+a {
+	color:#358;
+}
+a:hover {
+	color:#835;
+}
+a:visited {
+	color:#999;
+}
+
+/* -- Header -- */
+.header-nav {
+	background-color:#135;
+	color:#99c;
+	padding:4px;
+	font-size:8pt;
+	line-height:1.6em;
+	text-align:right;
+}
+.header-nav a {
+	text-decoration:none; 
+	color:#99c;
+}
+.header-nav a:hover {color:#fff;}
+
+.header {
+	height:100px; width:750px;
+	background: url('header.png') no-repeat 0 0;
+}
+
+/* -- Sub Header -- */
+.subheader {
+	background:#fff;
+	padding:2px;
+	text-align:center;
+	border:0px;
+	border-top:1px dotted #ddd;
+	border-bottom:1px dotted #ddd;
+}
+
+.subheader a {
+	text-decoration:none;
+	color:#358;
+}
+
+.subheader a:hover {
+	color:#358;
+	text-decoration:underline;
+}
+
+.subheader ul {
+	list-style-type:none;
+	padding:0px;
+	margin:0px;
+}
+
+.subheader li {
+	display:inline;
+	padding-left:10px;
+}
+
+/* -- Content -- */
+.content {
+	background-color:#fff;
+}
+.content h1 {
+	font:18pt Georgia, Serif;
+	color:#456;
+}
+.content h2{
+	font:16pt Georgia, Serif;
+	color:#654;
+}
+.content h3{
+	font:14pt Georgia, Serif;
+	color:#654;
+}
+.content blockquote{
+	background-color:#EEE;
+	border:0px;
+	border-top: #AAA solid 2px;
+	border-bottom: #AAA solid 2px;
+}
+
+.date {
+	text-align:right;
+	margin: 1.25em 0 .25em;
+	font:10pt Georgia, Serif;
+	color:#888;
+}
+
+.post {
+	padding:20px;
+}
+
+.byline {
+	font-size:8pt;
+	border:0;
+	border-bottom:1px;
+	border-style:solid;
+	border-color:#ccc;
+	padding-top:5px;
+}
+
+.byline img {
+	border:0;
+	padding:0;
+}
+
+/* -- Footer -- */
+.footer {
+	width:100%;
+	background-color: #135;
+	color:#bbb;
+	font-size:8pt;
+	text-align:center;
+}
+
+/* -- Misc -- */
+
+abbr, acronymn {
+	cursor: help;
+	font-style: normal;
+	border-bottom: 1px dashed;
+}
+
+/* -- Comments -- */
+#comment {
+	width:300px;
+}
+#commentform {
+	background-color:#fffeff;
+}
+#commentspopup {
+	text-align:left;
+	background:#fff;
+	font:8pt/1.6em Verdana, Sans-serif;
+}
