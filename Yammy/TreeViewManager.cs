@@ -23,6 +23,9 @@ using System.Windows.Forms;
 
 namespace Yammy
 {
+	/// <summary>
+	/// Delegate is used to load the treeview in another thread
+	/// </summary>
 	public delegate void dlgtLoadTreeView();
 	
 	enum TreeViewIcon : int
@@ -38,12 +41,29 @@ namespace Yammy
 	{
 		private TreeView m_treeView;
 		private WebBrowser m_webBrowser;
+		
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="treeView">control to load into</param>
+		/// <param name="webBrowser">associated web browser control</param>
+		/// <returns></returns>
 		public TreeViewManager(TreeView treeView, WebBrowser webBrowser)
 		{
 			m_treeView = treeView;
 			m_webBrowser = webBrowser;
 			//TODO: Add Treeview events m_treeView.
-			m_treeView.DoubleClick += new EventHandler(OnDoubleClick);
+			m_treeView.NodeMouseDoubleClick += new TreeNodeMouseClickEventHandler(OnDoubleClick);
+			m_treeView.NodeMouseClick += new TreeNodeMouseClickEventHandler(OnClick);
+		}
+
+		void OnClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				m_treeView.SelectedNode = e.Node;
+			}
+			OnDoubleClick(sender, e);
 		}
 		
 		/// <summary>
@@ -122,9 +142,9 @@ namespace Yammy
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void OnDoubleClick(object sender, System.EventArgs e)
+		void OnDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			TreeNode node = m_treeView.SelectedNode;
+			TreeNode node = e.Node;
 			
 			if(node == null || node.Tag == null) // Node is not a RemoteUser
 				return;
@@ -137,9 +157,9 @@ namespace Yammy
 			{
 				fileList = Directory.GetFiles(strDir);
 			}
-			catch (IOException)
+			catch (IOException ex)
 			{
-				//TODO: Log error
+				Logger.Instance.LogException(ex);
 				return;
 			}
 

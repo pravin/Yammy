@@ -74,12 +74,18 @@ namespace Yammy
 		#endregion
 
 		#region Constructor
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public FileExplorer()
 		{
 			_quit = false;
 			m_indexer = new Indexer(Config.Instance.TempIndexPath, IndexMode.CREATE);
 		}
 
+		/// <summary>
+		/// Responsible for disposing objects.
+		/// </summary>
 		public void Dispose()
 		{
 			if (m_objThread != null)

@@ -93,6 +93,9 @@ namespace Yammy
 			this.tbOpen = new System.Windows.Forms.ToolStripButton();
 			this.tbSave = new System.Windows.Forms.ToolStripButton();
 			this.btnExport = new System.Windows.Forms.ToolStripSplitButton();
+			this.exportAsHTML = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportAsPlainText = new System.Windows.Forms.ToolStripMenuItem();
+			this.exportAsCombined = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.btnHome = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -105,6 +108,7 @@ namespace Yammy
 			this.webBrowser = new System.Windows.Forms.WebBrowser();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.menuStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
 			this.toolStrip.SuspendLayout();
@@ -197,7 +201,7 @@ namespace Yammy
 			// 
 			this.mnuHelpAbout.Name = "mnuHelpAbout";
 			this.mnuHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.mnuHelpAbout.Size = new System.Drawing.Size(152, 22);
+			this.mnuHelpAbout.Size = new System.Drawing.Size(122, 22);
 			this.mnuHelpAbout.Text = "&About";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.MnuHelpAboutClick);
 			// 
@@ -265,11 +269,35 @@ namespace Yammy
 			// btnExport
 			// 
 			this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.exportAsHTML,
+									this.exportAsPlainText,
+									this.exportAsCombined});
 			this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
 			this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnExport.Name = "btnExport";
 			this.btnExport.Size = new System.Drawing.Size(40, 28);
 			this.btnExport.Text = "Export";
+			this.btnExport.ButtonClick += new System.EventHandler(this.BtnExportButtonClick);
+			// 
+			// exportAsHTML
+			// 
+			this.exportAsHTML.Name = "exportAsHTML";
+			this.exportAsHTML.Size = new System.Drawing.Size(156, 22);
+			this.exportAsHTML.Text = "Export &HTML";
+			this.exportAsHTML.Click += new System.EventHandler(this.ExportAsHTMLClick);
+			// 
+			// exportAsPlainText
+			// 
+			this.exportAsPlainText.Name = "exportAsPlainText";
+			this.exportAsPlainText.Size = new System.Drawing.Size(156, 22);
+			this.exportAsPlainText.Text = "Export &Plain Text";
+			// 
+			// exportAsCombined
+			// 
+			this.exportAsCombined.Name = "exportAsCombined";
+			this.exportAsCombined.Size = new System.Drawing.Size(156, 22);
+			this.exportAsCombined.Text = "Export &Combined";
 			// 
 			// toolStripSeparator1
 			// 
@@ -343,6 +371,7 @@ namespace Yammy
 			// 
 			this.treeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeView.FullRowSelect = true;
 			this.treeView.ImageIndex = 0;
 			this.treeView.ImageList = this.imageList;
 			this.treeView.Location = new System.Drawing.Point(0, 0);
@@ -362,6 +391,10 @@ namespace Yammy
 			this.webBrowser.Size = new System.Drawing.Size(322, 292);
 			this.webBrowser.TabIndex = 0;
 			this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
+			// 
+			// folderBrowserDialog
+			// 
+			this.folderBrowserDialog.ShowNewFolderButton = false;
 			// 
 			// MainForm
 			// 
@@ -390,6 +423,10 @@ namespace Yammy
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem exportAsHTML;
+		private System.Windows.Forms.ToolStripMenuItem exportAsPlainText;
+		private System.Windows.Forms.ToolStripMenuItem exportAsCombined;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.ToolStripMenuItem mnuToolsOptions;
@@ -667,9 +704,35 @@ namespace Yammy
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void MnuHelpAboutClick(object sender, System.EventArgs e)
+		void MnuHelpAboutClick(object sender, EventArgs e)
 		{
 			webBrowser.DocumentText = Resources.Instance.AboutYammyHtml;
+		}
+		
+		void BtnExportButtonClick(object sender, EventArgs e)
+		{
+
+		}
+
+		string GetExportFileName()
+		{
+			folderBrowserDialog.ShowNewFolderButton = true;
+			if(folderBrowserDialog.ShowDialog() == DialogResult.OK)
+			{
+				return folderBrowserDialog.SelectedPath;
+			}
+			return null;
+		}
+		
+		void ExportAsHTMLClick(object sender, EventArgs e)
+		{
+			string strDir = GetExportFileName();
+			if(strDir == null)
+				return;
+			if(treeView.SelectedNode != null)
+			{
+				MessageBox.Show("Export");
+			}
 		}
 	}
 }
