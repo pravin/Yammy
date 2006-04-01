@@ -27,7 +27,7 @@
 <a href="mailto:pravinp[at]gmail[dot]com?subject=Yammy">Email</a>
 </div>
 
-<div class="header"></div>
+<div class="header" OnClick="javascript:top.location.href='http://yammy.sourceforge.net/';"></div>
 <!-- TOP -->
 <div class="subheader">
 	<ul>
@@ -40,27 +40,5 @@
 <div class="post">
 <!-- Display this only in the home page -->
 <?php if (is_home()) { ?>
-	<table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<td align="center">
-		<img src="/images/yammy-main.png" alt="Screenshot of Yammy" />
-		<a href="http://prdownloads.sourceforge.net/yammy/yammy-0.7-setup.exe?download" title="Yammy Installer [153kb]">Download Yammy</a>
-		<br />
-		(Requires <a href="http://www.microsoft.com/downloads/details.aspx?FamilyId=262D25E3-F589-4842-8157-034D1E7CF3A3&displaylang=en" title=".NET Runtime (Required) [23 mb]">.NET Runtime</a>)
-	</td>
-	<td>
-		<p>Yammy is an app that allows you to decode and view not only yours but other's archived conversations.</p>
-		<p>You don't even need a password!</p>
-		<p><b>Features:</b></p>
-		<ul>
-		<li>Decode and view archived conversations and mobile messages.</li>
-		<li>Export to HTML, Rich Text (rtf) and Plain Text(txt) formats.</li>
-		<li>Control archiving for all users on your PC.</li>
-		<li>Batch decode entire directories</li>
-		<li>Use Yammy in your language. Yammy is currently available in:<br />English, Basque, Catalan, Dutch, French, Norwegian, Romanian, Spanish, Swedish, Tamil and Turkish.</li>
-		</ul>
-		</div>
-	</td>
-	</tr>
-	</table>
+	<?php include("blurb.html"); ?>
 <?php } ?>
