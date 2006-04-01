@@ -7,7 +7,7 @@
 	
 	<div>
 	<?php if (is_home()) { ?>
-		<?php the_content(__('more ...')); ?>
+		<?php the_content(__('<img src="/images/more.gif" style="border:0px" />')); ?>
 	<?php } else { ?>
 		<?php the_content(); ?>
 	<?php } ?>

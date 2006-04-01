@@ -22,6 +22,9 @@ using System.Collections;
 
 namespace Yammy
 {
+	/// <summary>
+	/// Used to return archiving options for a user from the registry
+	/// </summary>
 	public sealed class UserArchiveFlag
 	{
 		/// <summary>
@@ -84,6 +87,9 @@ namespace Yammy
 			LoadUserList();
 		}
 		
+		/// <summary>
+		/// Fills in variables from the config file
+		/// </summary>
 		private void ReadConfig()
 		{
 			// Set default values
