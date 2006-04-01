@@ -32,7 +32,9 @@ namespace Yammy
 	public class MainForm : System.Windows.Forms.Form
 	{
 		private TreeViewManager m_treeviewManager;
-		
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public MainForm()
 		{
 			try
@@ -54,7 +56,10 @@ namespace Yammy
 			webBrowser.Navigated += new WebBrowserNavigatedEventHandler(HandleNavigateDone);
 			webBrowser.ProgressChanged += new WebBrowserProgressChangedEventHandler(HandleNavigateProgress);
 		}
-		
+		/// <summary>
+		/// Entry point
+		/// </summary>
+		/// <param name="args">Command line arguments</param>
 		[STAThread]
 		public static void Main(string[] args)
 		{
@@ -148,7 +153,7 @@ namespace Yammy
 			this.mnuOpen.Image = ((System.Drawing.Image)(resources.GetObject("mnuOpen.Image")));
 			this.mnuOpen.Name = "mnuOpen";
 			this.mnuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.mnuOpen.Size = new System.Drawing.Size(140, 22);
+			this.mnuOpen.Size = new System.Drawing.Size(152, 22);
 			this.mnuOpen.Text = "&Open";
 			this.mnuOpen.Click += new System.EventHandler(this.MnuOpenClick);
 			// 
@@ -157,19 +162,19 @@ namespace Yammy
 			this.mnuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("mnuFileSave.Image")));
 			this.mnuFileSave.Name = "mnuFileSave";
 			this.mnuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.mnuFileSave.Size = new System.Drawing.Size(140, 22);
+			this.mnuFileSave.Size = new System.Drawing.Size(152, 22);
 			this.mnuFileSave.Text = "&Save";
 			this.mnuFileSave.Click += new System.EventHandler(this.MnuFileSaveClick);
 			// 
 			// mnuFileSep1
 			// 
 			this.mnuFileSep1.Name = "mnuFileSep1";
-			this.mnuFileSep1.Size = new System.Drawing.Size(137, 6);
+			this.mnuFileSep1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// mnuFileExit
 			// 
 			this.mnuFileExit.Name = "mnuFileExit";
-			this.mnuFileExit.Size = new System.Drawing.Size(140, 22);
+			this.mnuFileExit.Size = new System.Drawing.Size(152, 22);
 			this.mnuFileExit.Text = "&Exit";
 			this.mnuFileExit.Click += new System.EventHandler(this.MnuFileExitClick);
 			// 
@@ -185,7 +190,7 @@ namespace Yammy
 			// 
 			this.mnuToolsOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuToolsOptions.Image")));
 			this.mnuToolsOptions.Name = "mnuToolsOptions";
-			this.mnuToolsOptions.Size = new System.Drawing.Size(111, 22);
+			this.mnuToolsOptions.Size = new System.Drawing.Size(152, 22);
 			this.mnuToolsOptions.Text = "&Options";
 			this.mnuToolsOptions.Click += new System.EventHandler(this.MnuToolsOptionsClick);
 			// 
@@ -201,7 +206,7 @@ namespace Yammy
 			// 
 			this.mnuHelpAbout.Name = "mnuHelpAbout";
 			this.mnuHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.mnuHelpAbout.Size = new System.Drawing.Size(122, 22);
+			this.mnuHelpAbout.Size = new System.Drawing.Size(152, 22);
 			this.mnuHelpAbout.Text = "&About";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.MnuHelpAboutClick);
 			// 
