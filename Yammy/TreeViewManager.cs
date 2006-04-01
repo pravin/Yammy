@@ -171,12 +171,21 @@ namespace Yammy
 			StringBuilder sb = new StringBuilder();
 			foreach(string file in fileList)
 			{
-				Decoder d = new Decoder(file);
-				string strDecodedPreview = d.Decode(false, true);
-				sb.Append("<div class=\"title\">" + Path.GetFileNameWithoutExtension(file) + "</div>");
-				sb.Append(strDecodedPreview);
-				sb.Append("<a href=\"yammy:decode?" + file + "\">Read full conversation</a>");
-				sb.Append("<hr size=1>");
+				try
+				{
+					Decoder d = new Decoder(file);
+					string strDecodedPreview = d.Decode(false, true);
+					string strRawDate = Path.GetFileNameWithoutExtension(file).Split('-')[0];
+					string strPrettyDate = DateTime.ParseExact(strRawDate, "yyyyddmm", null).ToLongDateString();
+					sb.Append("<div class=\"title\">" + strPrettyDate + "</div>");
+					sb.Append(strDecodedPreview);
+					sb.Append("<a href=\"yammy:decode?" + file + "\">Read full conversation</a>");
+					sb.Append("<hr size=1>");
+				}
+				catch (Exception ex)
+				{
+					Logger.Instance.LogException(ex);
+				}
 			}
 			
 			strOutput = strOutput.Replace("<$ReplaceBody$>", sb.ToString());
