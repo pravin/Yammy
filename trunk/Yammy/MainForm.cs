@@ -32,6 +32,8 @@ namespace Yammy
 	public class MainForm : System.Windows.Forms.Form
 	{
 		private TreeViewManager m_treeviewManager;
+		private string m_strImagePath = "file://" + AppDomain.CurrentDomain.BaseDirectory + "images";
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -126,9 +128,9 @@ namespace Yammy
 			// 
 			this.menuStrip.BackColor = System.Drawing.SystemColors.Control;
 			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.mnuFile,
-									this.mnuTools,
-									this.mnuHelp});
+            this.mnuFile,
+            this.mnuTools,
+            this.mnuHelp});
 			this.menuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
@@ -140,10 +142,10 @@ namespace Yammy
 			// 
 			this.mnuFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
 			this.mnuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.mnuOpen,
-									this.mnuFileSave,
-									this.mnuFileSep1,
-									this.mnuFileExit});
+            this.mnuOpen,
+            this.mnuFileSave,
+            this.mnuFileSep1,
+            this.mnuFileExit});
 			this.mnuFile.Name = "mnuFile";
 			this.mnuFile.Size = new System.Drawing.Size(35, 20);
 			this.mnuFile.Text = "&File";
@@ -153,7 +155,7 @@ namespace Yammy
 			this.mnuOpen.Image = ((System.Drawing.Image)(resources.GetObject("mnuOpen.Image")));
 			this.mnuOpen.Name = "mnuOpen";
 			this.mnuOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.mnuOpen.Size = new System.Drawing.Size(152, 22);
+			this.mnuOpen.Size = new System.Drawing.Size(140, 22);
 			this.mnuOpen.Text = "&Open";
 			this.mnuOpen.Click += new System.EventHandler(this.MnuOpenClick);
 			// 
@@ -162,26 +164,26 @@ namespace Yammy
 			this.mnuFileSave.Image = ((System.Drawing.Image)(resources.GetObject("mnuFileSave.Image")));
 			this.mnuFileSave.Name = "mnuFileSave";
 			this.mnuFileSave.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.mnuFileSave.Size = new System.Drawing.Size(152, 22);
+			this.mnuFileSave.Size = new System.Drawing.Size(140, 22);
 			this.mnuFileSave.Text = "&Save";
 			this.mnuFileSave.Click += new System.EventHandler(this.MnuFileSaveClick);
 			// 
 			// mnuFileSep1
 			// 
 			this.mnuFileSep1.Name = "mnuFileSep1";
-			this.mnuFileSep1.Size = new System.Drawing.Size(149, 6);
+			this.mnuFileSep1.Size = new System.Drawing.Size(137, 6);
 			// 
 			// mnuFileExit
 			// 
 			this.mnuFileExit.Name = "mnuFileExit";
-			this.mnuFileExit.Size = new System.Drawing.Size(152, 22);
+			this.mnuFileExit.Size = new System.Drawing.Size(140, 22);
 			this.mnuFileExit.Text = "&Exit";
 			this.mnuFileExit.Click += new System.EventHandler(this.MnuFileExitClick);
 			// 
 			// mnuTools
 			// 
 			this.mnuTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.mnuToolsOptions});
+            this.mnuToolsOptions});
 			this.mnuTools.Name = "mnuTools";
 			this.mnuTools.Size = new System.Drawing.Size(44, 20);
 			this.mnuTools.Text = "&Tools";
@@ -190,14 +192,14 @@ namespace Yammy
 			// 
 			this.mnuToolsOptions.Image = ((System.Drawing.Image)(resources.GetObject("mnuToolsOptions.Image")));
 			this.mnuToolsOptions.Name = "mnuToolsOptions";
-			this.mnuToolsOptions.Size = new System.Drawing.Size(152, 22);
+			this.mnuToolsOptions.Size = new System.Drawing.Size(111, 22);
 			this.mnuToolsOptions.Text = "&Options";
 			this.mnuToolsOptions.Click += new System.EventHandler(this.MnuToolsOptionsClick);
 			// 
 			// mnuHelp
 			// 
 			this.mnuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.mnuHelpAbout});
+            this.mnuHelpAbout});
 			this.mnuHelp.Name = "mnuHelp";
 			this.mnuHelp.Size = new System.Drawing.Size(40, 20);
 			this.mnuHelp.Text = "&Help";
@@ -206,15 +208,15 @@ namespace Yammy
 			// 
 			this.mnuHelpAbout.Name = "mnuHelpAbout";
 			this.mnuHelpAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-			this.mnuHelpAbout.Size = new System.Drawing.Size(152, 22);
+			this.mnuHelpAbout.Size = new System.Drawing.Size(122, 22);
 			this.mnuHelpAbout.Text = "&About";
 			this.mnuHelpAbout.Click += new System.EventHandler(this.MnuHelpAboutClick);
 			// 
 			// statusStrip
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.toolStripStatusLabel,
-									this.toolStripProgressBar});
+            this.toolStripStatusLabel,
+            this.toolStripProgressBar});
 			this.statusStrip.Location = new System.Drawing.Point(0, 351);
 			this.statusStrip.Name = "statusStrip";
 			this.statusStrip.Size = new System.Drawing.Size(492, 22);
@@ -236,15 +238,15 @@ namespace Yammy
 			this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			this.toolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.tbOpen,
-									this.tbSave,
-									this.btnExport,
-									this.toolStripSeparator1,
-									this.btnHome,
-									this.toolStripSeparator2,
-									this.lblFind,
-									this.txtFind,
-									this.btnFind});
+            this.tbOpen,
+            this.tbSave,
+            this.btnExport,
+            this.toolStripSeparator1,
+            this.btnHome,
+            this.toolStripSeparator2,
+            this.lblFind,
+            this.txtFind,
+            this.btnFind});
 			this.toolStrip.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -275,9 +277,9 @@ namespace Yammy
 			// 
 			this.btnExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
 			this.btnExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-									this.exportAsHTML,
-									this.exportAsPlainText,
-									this.exportAsCombined});
+            this.exportAsHTML,
+            this.exportAsPlainText,
+            this.exportAsCombined});
 			this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
 			this.btnExport.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.btnExport.Name = "btnExport";
@@ -382,7 +384,7 @@ namespace Yammy
 			this.treeView.Location = new System.Drawing.Point(0, 0);
 			this.treeView.Name = "treeView";
 			this.treeView.SelectedImageIndex = 0;
-			this.treeView.ShowRootLines = false;
+			this.treeView.ShowLines = false;
 			this.treeView.Size = new System.Drawing.Size(158, 292);
 			this.treeView.TabIndex = 0;
 			// 
@@ -427,6 +429,7 @@ namespace Yammy
 			this.splitContainer.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
+
 		}
 		private System.Windows.Forms.ToolStripMenuItem exportAsHTML;
 		private System.Windows.Forms.ToolStripMenuItem exportAsPlainText;
@@ -478,9 +481,11 @@ namespace Yammy
 						
 						Decoder d = new Decoder(strDecodeFilePath);
 						string strDecode = d.Decode(false, false);
+						strDecode = strDecode.Replace("YAMMY_IMAGE_PATH", m_strImagePath);
 						string strOutput = Resources.Instance.DisplayHtml.Replace("<$ReplaceBody$>", strDecode);
 						strOutput = strOutput.Replace("<$ReplaceTitle$>", string.Format(Resources.Instance.ConversationBetween,
 			                                            d.LocalID, d.RemoteID));
+
 						webBrowser.DocumentText = strOutput;
 					}
 					e.Cancel = true;
@@ -719,7 +724,7 @@ namespace Yammy
 
 		}
 
-		string GetExportFileName()
+		string GetExportFolderName()
 		{
 			folderBrowserDialog.ShowNewFolderButton = true;
 			if(folderBrowserDialog.ShowDialog() == DialogResult.OK)
@@ -731,12 +736,47 @@ namespace Yammy
 		
 		void ExportAsHTMLClick(object sender, EventArgs e)
 		{
-			string strDir = GetExportFileName();
-			if(strDir == null)
+			TreeNode node = treeView.SelectedNode;
+			if (node == null)
 				return;
-			if(treeView.SelectedNode != null)
+			string strDir = node.Tag as string;
+			if (strDir == null)
+				return;
+
+			string strOutDir = GetExportFolderName();
+			if (strOutDir == null)
+				return;
+
+			string[] fileList = null;
+			try
 			{
-				MessageBox.Show("Export");
+				fileList = Directory.GetFiles(strDir);
+			}
+			catch (IOException ex)
+			{
+				Logger.Instance.LogException(ex);
+				return;
+			}
+
+			foreach (string file in fileList)
+			{
+				try
+				{
+					Decoder d = new Decoder(file);
+					string strDecode = d.Decode(false, false);
+					string strOutput = Resources.Instance.DisplayHtml.Replace("<$ReplaceBody$>", strDecode);
+					strOutput = strOutput.Replace("<$ReplaceTitle$>", string.Format(Resources.Instance.ConversationBetween,
+													d.LocalID, d.RemoteID));
+
+					string strOutputFile = Path.Combine(strOutDir, Path.GetFileNameWithoutExtension(file) + ".html");
+					StreamWriter writer = new StreamWriter(strOutputFile);
+					writer.Write(strOutput);
+					writer.Flush(); writer.Close(); writer = null;
+				}
+				catch (Exception ex)
+				{
+					Logger.Instance.LogException(ex);
+				}
 			}
 		}
 	}

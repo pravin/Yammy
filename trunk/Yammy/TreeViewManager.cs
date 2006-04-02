@@ -41,6 +41,7 @@ namespace Yammy
 	{
 		private TreeView m_treeView;
 		private WebBrowser m_webBrowser;
+		private string m_strImagePath = "file://" + AppDomain.CurrentDomain.BaseDirectory + "images";
 		
 		/// <summary>
 		/// Constructor
@@ -53,8 +54,13 @@ namespace Yammy
 			m_treeView = treeView;
 			m_webBrowser = webBrowser;
 			//TODO: Add Treeview events m_treeView.
-			m_treeView.NodeMouseDoubleClick += new TreeNodeMouseClickEventHandler(OnDoubleClick);
 			m_treeView.NodeMouseClick += new TreeNodeMouseClickEventHandler(OnClick);
+			m_treeView.AfterSelect += new TreeViewEventHandler(OnSelect);
+		}
+
+		void OnSelect(object sender, TreeViewEventArgs e)
+		{
+			HandleNodeClick(e.Node);
 		}
 
 		void OnClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -63,7 +69,6 @@ namespace Yammy
 			{
 				m_treeView.SelectedNode = e.Node;
 			}
-			OnDoubleClick(sender, e);
 		}
 		
 		/// <summary>
@@ -132,27 +137,22 @@ namespace Yammy
 					}
 				}
 			}
-			
-			//m_treeView.ExpandAll();
 		}
 		
 		/// <summary>
 		/// Handles the OnDoubleClick event. Shows the list of conversations
 		/// between the two users
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		void OnDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+		/// <param name="node">Node that has been clicked</param>
+		void HandleNodeClick(TreeNode node)
 		{
-			TreeNode node = e.Node;
-			
-			if(node == null || node.Tag == null) // Node is not a RemoteUser
+			if (node == null || node.Tag == null) // Node is not a RemoteUser
 				return;
-			
+
 			string strDir = node.Tag as string;
-			if(strDir == null)
+			if (strDir == null)
 				return;
-			string []fileList= null;
+			string[] fileList = null;
 			try
 			{
 				fileList = Directory.GetFiles(strDir);
@@ -164,12 +164,12 @@ namespace Yammy
 			}
 
 			string strOutput = Resources.Instance.DisplayHtml;
-			strOutput = strOutput.Replace("<$ReplaceTitle$>", 
-			                              string.Format(Resources.Instance.ConversationBetween,
-			                                            node.Parent.Parent.Text, node.Text));
-			
+			strOutput = strOutput.Replace("<$ReplaceTitle$>",
+										  string.Format(Resources.Instance.ConversationBetween,
+														node.Parent.Parent.Text, node.Text));
+
 			StringBuilder sb = new StringBuilder();
-			foreach(string file in fileList)
+			foreach (string file in fileList)
 			{
 				try
 				{
@@ -187,9 +187,10 @@ namespace Yammy
 					Logger.Instance.LogException(ex);
 				}
 			}
-			
-			strOutput = strOutput.Replace("<$ReplaceBody$>", sb.ToString());
-			
+
+			string strDecodeOutput = sb.ToString().Replace("YAMMY_IMAGE_PATH", m_strImagePath);
+			strOutput = strOutput.Replace("<$ReplaceBody$>", strDecodeOutput);
+
 			m_webBrowser.DocumentText = strOutput;
 		}
 	}
