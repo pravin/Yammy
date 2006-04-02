@@ -181,8 +181,8 @@ namespace Yammy
                 }
 
                 string strCleanData = CleanData(buffer);
-                if(!raw)
-                	strCleanData = Emotify(strCleanData);
+				if(!raw)
+				    strCleanData = Emote.Instance.Emotify(strCleanData);
                 string strTime = MakeDTFromCTime(timeStamp).ToLongTimeString();
 
                 if (!raw)
@@ -258,42 +258,5 @@ namespace Yammy
                 return string.Empty;
             }
         }
-        private string Emotify(string input)
-        {
-        	//StringBuilder sb = new StringBuilder(input.Length);
-        	return input;
-        	//return sb.ToString();
-        }
-    }
-    
-    class Emote
-    {
-    	private static Emote _instance = new Emote();
-    	private System.Collections.Hashtable htEmotes;
-    	private Emote()
-    	{
-    		// Path is of the form C:\Program Files\Yahoo!\Messenger\Media\Smileys\XXX.gif
-    		htEmotes = new System.Collections.Hashtable(100);
-    		htEmotes.Add(":)", "1"); 
-    		htEmotes.Add(":(", "2");
-    		htEmotes.Add(";)", "3");
-    		htEmotes.Add(":D", "4");
-    		htEmotes.Add(";;)", "5");
-    		htEmotes.Add(">:D<", "6");
-    		htEmotes.Add(":-/", "7");
-    		htEmotes.Add(":x", "8");
-    		htEmotes.Add(":\">", "9");
-    		htEmotes.Add(":P", "10");
-    		htEmotes.Add(":-*", "11");
-    		htEmotes.Add("=((", "12");
-    	}
-    	
-    	public Emote Instance
-    	{
-    		get
-    		{
-    			return _instance;
-    		}
-    	}
-    }
+    }    
 }
