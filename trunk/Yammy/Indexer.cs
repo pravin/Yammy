@@ -86,6 +86,7 @@ namespace Yammy
             m_indexMode = mode;
             m_bSucess = false;
             m_analyzer = new StandardAnalyzer();
+			Logger.Instance.LogDebug("Loading Indexer in " + mode.ToString() + " mode");
 
             if (mode == IndexMode.CREATE)
             {
@@ -181,6 +182,7 @@ namespace Yammy
         public IndexInfo[] Search(string searchTerm)
         {
 			IndexInfo[] retVal = null;
+			Logger.Instance.LogDebug("Searching index for: " + searchTerm);
 
 			if (m_bSucess && m_indexMode == IndexMode.SEARCH && searchTerm != null)
 			{

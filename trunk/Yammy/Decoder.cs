@@ -41,12 +41,19 @@ namespace Yammy
         {
             m_bSucceeded = false;
             m_strFilePath = filePath;
-            if (!File.Exists(m_strFilePath))
-                return;
-            if (ParsePath())
-            {
-                m_bSucceeded = true;
-            }
+			if (!File.Exists(m_strFilePath))
+			{
+				Logger.Instance.LogError(filePath + " does not exist. Cannot decode.");
+				return;
+			}
+			if (ParsePath())
+			{
+				m_bSucceeded = true;
+			}
+			else
+			{
+				Logger.Instance.LogError("Couldn't parse " + filePath + ". Cannot decode.");
+			}
         }
 
         #region Properties

@@ -50,12 +50,15 @@ namespace Yammy
 		private int m_iIndexUpdateFrequency;
 		private DateTime m_dtIndexLastUpdated;
 		private ArrayList m_arUserList;
+		private string m_strDisplayHtml;
 		#endregion
 		
 		const string ConstYahooProfilesPath = "YahooProfilesPath";
 		const string ConstSplitterWidth = "SplitterWidth";
 		const string ConstIndexLastUpdated = "IndexLastUpdated";
-		const string ConstIndexUpdateFrequency = "ConstIndexUpdateFrequency";
+		const string ConstIndexUpdateFrequency = "IndexUpdateFrequency";
+		const string ConstShowEmotes = "ShowEmotes";
+		const string ConstShowLastXMonthsChatLogs = "ShowLastXMonthsChatLogs";
 		
 		/// <summary>
 		/// Gets a singleton instance of the class
@@ -77,6 +80,27 @@ namespace Yammy
 				m_strTempIndexPath = Path.Combine(m_strYammyAppData, "TempIndex");
 				m_strIndexPath = Path.Combine(m_strYammyAppData, "Index");
 				m_arUserList = new ArrayList(4);
+
+				string strFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "default.html");
+				m_strDisplayHtml = string.Empty;
+				StreamReader sr = null;
+				if (File.Exists(strFilename))
+				{
+					sr = new StreamReader(strFilename);
+					m_strDisplayHtml = sr.ReadToEnd();
+					sr.Close();
+				}
+
+				strFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dark.css");
+				string strCSS = string.Empty;
+				if (File.Exists(strFilename))
+				{
+					sr = new StreamReader(strFilename);
+					strCSS = sr.ReadToEnd();
+					sr.Close();
+				}
+
+				m_strDisplayHtml = m_strDisplayHtml.Replace("<$ReplaceByStyleSheet$>", strCSS);
 			}
 			catch(IOException e)
 			{
@@ -307,6 +331,16 @@ namespace Yammy
 		public ArrayList UserList
 		{
 			get { return m_arUserList; }
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string DisplayHtml
+		{
+			get
+			{
+				return m_strDisplayHtml;
+			}
 		}
 	}
 }

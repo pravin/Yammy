@@ -103,7 +103,7 @@ namespace Yammy
 		/// <summary>
 		/// Starts the FileExploring process
 		/// </summary>
-		/// <param name="aggresive">
+		/// <param name="aggressive">
 		/// If true, thread priority isnt set to low and there is no delay after
 		/// each file addition
 		/// </param>
@@ -157,6 +157,7 @@ namespace Yammy
 */
 		public void Stop()
 		{
+			Logger.Instance.LogDebug("FileExplorer stop requested");
 			_quit = true;
 		}
 		#endregion
@@ -211,9 +212,11 @@ namespace Yammy
 						}
 						foreach(string subsubdir in subsubdirs)
 						{
+							OnFileExplorerProgress(subsubdir);
 							string []archiveFiles = Directory.GetFiles(subsubdir);
 							foreach(string archive in archiveFiles)
 							{
+								Logger.Instance.LogDebug("Indexing: " + archive);
 								Decoder d = new Decoder(archive);
 								string strMessage = d.Decode(true, false);
 								IndexInfo info = new IndexInfo(d.LocalID, d.RemoteID, strMessage, archive);
