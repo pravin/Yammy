@@ -53,7 +53,7 @@ namespace Yammy
 				IndexProgress(filePath, numDocs);
 			}
 		}
-		
+
 		public event FileExplorerProgressHandler FileExplorerProgress;
 		private void OnFileExplorerProgress(string filePath)
 		{
@@ -62,11 +62,11 @@ namespace Yammy
 				FileExplorerProgress(filePath);
 			}
 		}
-		
+
 		public event FileExplorerDoneHandler FileExplorerDone;
 		private void OnFileExplorerDone()
 		{
-			if(FileExplorerDone != null)
+			if (FileExplorerDone != null)
 			{
 				FileExplorerDone();
 			}
@@ -120,14 +120,6 @@ namespace Yammy
 			}
 
 			m_objThread = new Thread(new ThreadStart(Explore));
-			if(m_bAgressive)
-			{
-				m_objThread.Priority = ThreadPriority.Normal;
-			}
-			else
-			{
-				m_objThread.Priority = ThreadPriority.Lowest;
-			}
 			m_objThread.Name = "FileExplorer";
 			try
 			{
@@ -138,23 +130,23 @@ namespace Yammy
 				Logger.Instance.LogException(e);
 			}
 		}
-/*
-		public void Pause()
-		{
-			if (m_objThread != null && m_objThread.ThreadState == ThreadState.Running)
-			{
-				m_objThread.Suspend();
-			}
-		}
+		/*
+				public void Pause()
+				{
+					if (m_objThread != null && m_objThread.ThreadState == ThreadState.Running)
+					{
+						m_objThread.Suspend();
+					}
+				}
 
-		public void Resume()
-		{
-			if (m_objThread != null && m_objThread.ThreadState == ThreadState.Suspended)
-			{
-				m_objThread.Resume();
-			}
-		}
-*/
+				public void Resume()
+				{
+					if (m_objThread != null && m_objThread.ThreadState == ThreadState.Suspended)
+					{
+						m_objThread.Resume();
+					}
+				}
+		*/
 		public void Stop()
 		{
 			Logger.Instance.LogDebug("FileExplorer stop requested");
@@ -165,11 +157,11 @@ namespace Yammy
 		#region Explore
 		private void Explore()
 		{
-			string strProfilesPath = Path.Combine(Config.Instance.YahooProfilesPath, "Profiles");
-			if(!Directory.Exists(strProfilesPath))
+			string strProfilesPath = Path.Combine(Common.GetYahooPath(), "Profiles");
+			if (!Directory.Exists(strProfilesPath))
 				return;
-			
-			string []dirs = null;
+
+			string[] dirs = null;
 			try
 			{
 				dirs = Directory.GetDirectories(strProfilesPath);
@@ -178,15 +170,15 @@ namespace Yammy
 			{
 				return;
 			}
-			
+
 			foreach (string dir in dirs)
 			{
 				string strUser = Path.GetFileNameWithoutExtension(dir);
-				
+
 				string strSubPath = Path.Combine(dir, "Archive");
-				if(Directory.Exists(strSubPath))
+				if (Directory.Exists(strSubPath))
 				{
-					string []subdirs = null;
+					string[] subdirs = null;
 					try
 					{
 						subdirs = Directory.GetDirectories(strSubPath);
@@ -195,13 +187,13 @@ namespace Yammy
 					{
 						continue;
 					}
-					foreach(string subdir in subdirs)
+					foreach (string subdir in subdirs)
 					{
 						string strMessageType = Path.GetFileNameWithoutExtension(subdir);
-						if(string.Compare(strMessageType, "Conferences", true) == 0)
+						if (string.Compare(strMessageType, "Conferences", true) == 0)
 							continue;
-						
-						string []subsubdirs = null;
+
+						string[] subsubdirs = null;
 						try
 						{
 							subsubdirs = Directory.GetDirectories(subdir);
@@ -210,17 +202,21 @@ namespace Yammy
 						{
 							continue;
 						}
-						foreach(string subsubdir in subsubdirs)
+						foreach (string subsubdir in subsubdirs)
 						{
 							OnFileExplorerProgress(subsubdir);
-							string []archiveFiles = Directory.GetFiles(subsubdir);
-							foreach(string archive in archiveFiles)
+							string[] archiveFiles = Directory.GetFiles(subsubdir);
+							foreach (string archive in archiveFiles)
 							{
 								Logger.Instance.LogDebug("Indexing: " + archive);
 								Decoder d = new Decoder(archive);
 								string strMessage = d.Decode(true, false);
 								IndexInfo info = new IndexInfo(d.LocalID, d.RemoteID, strMessage, archive);
 								m_indexer.AddDocument(info);
+								if (!m_bAgressive)
+								{
+									Thread.Sleep(100);
+								}
 							}
 						}
 					}
