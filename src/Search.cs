@@ -1,5 +1,5 @@
 // Yammy - Yahoo Messenger Archives Decoder
-// Copyright (C) 2005-2006, Pravin Paratey (pravinp at gmail dot com)
+// Copyright (C) 2005-2007, Pravin Paratey (pravinp at gmail dot com)
 // http://yammy.sourceforge.net
 //
 // This program is free software; you can redistribute it and/or
@@ -139,7 +139,7 @@ namespace Yammy
 		/// <returns>string with the search terms in bold</returns>
 		public static string Boldify(Match m)
 		{
-			return "<b>" + m.Value + "</b>";
+			return "<b style='background:#ff6'>" + m.Value + "</b>";
 		}
 	}
 }

@@ -1,5 +1,5 @@
 // Yammy - Yahoo Messenger Archives Decoder
-// Copyright (C) 2005-2006, Pravin Paratey (pravinp at gmail dot com)
+// Copyright (C) 2005-2007, Pravin Paratey (pravinp at gmail dot com)
 // http://yammy.sourceforge.net
 //
 // This program is free software; you can redistribute it and/or
@@ -42,7 +42,10 @@ namespace Yammy
 				try
 				{
 					// Show preview of 10
-					StringBuilder sbDecode = new StringBuilder();
+					StringBuilder sbDecode = new StringBuilder(
+						"<div class='crumb'><a href='/'>Users</a> &raquo; <a href='/show?localuser=" +
+						localUser + "'>" + localUser + "</a> &raquo; " + remoteUser + "</div>" +
+						"<h1>Conversations between " + localUser + " and " + remoteUser + "</h1>");
 					string dirName = Common.ConstructPath(localUser, type, remoteUser, string.Empty);
 					string[] files = Directory.GetFiles(dirName);
 
@@ -110,7 +113,11 @@ namespace Yammy
 			{
 				string fileName = Common.ConstructPath(localUser, type, remoteUser, fname);
 				Decoder d = new Decoder(fileName + ".dat");
-				strDecode = d.Decode(false, false);
+				strDecode = "<div class='crumb'><a href='/'>Users</a> &raquo; <a href='/show?localuser=" +
+						localUser + "'>" + localUser + "</a> &raquo; <a href='/decode?localuser=" + localUser +
+						"&remoteuser=" + remoteUser + "&type=i'>" + remoteUser + "</a> &raquo; " + 
+						Common.GetDateTimeFromYYYYMMDD(fname.Substring(0,8)).ToShortDateString() + "</div>";
+				strDecode += d.Decode(false, false);
 			}
 			return strDecode;
 		}
