@@ -20,81 +20,78 @@ using System.Threading;
 
 namespace Yammy
 {
-    /// <summary>
-    /// This will be a common class to synchronize events like
-    /// 1. Obtaining a lock before moving a index-dir and releasing it after done.
-    /// Question: What happens if an object acquires a lock and dies before releasing it?
-    /// </summary>
-    class Synchronizer
-    {
-        #region Member Vars
-        private static Synchronizer _instance;
-        private static object m_lock = new object();
-        private object m_indexerLock;
-        private bool m_bIndexLocked = false;
-        private object m_objThatHoldsLock;
-        #endregion
+	/// <summary>
+	/// This will be a common class to synchronize events like
+	/// 1. Obtaining a lock before moving a index-dir and releasing it after done.
+	/// Question: What happens if an object acquires a lock and dies before releasing it?
+	/// </summary>
+	class Synchronizer
+	{
+		#region Member Vars
+		private static Synchronizer _instance;
+		private static object m_lock = new object();
+		private object m_indexerLock;
+		private object m_objThatHoldsLock;
+		#endregion
 
-        #region Constructor
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        private Synchronizer()
-        {
-            m_indexerLock = new object();
-        }
-        #endregion
+		#region Constructor
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		private Synchronizer()
+		{
+			m_indexerLock = new object();
+		}
+		#endregion
 
-        #region Standard Singleton Implementation
-        /// <summary>
-        /// Standard Singleton Implementation
-        /// </summary>
-        public static Synchronizer Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    lock (m_lock)
-                    {
-                        if (_instance == null)
-                        {
-                            _instance = new Synchronizer();
-                        }
-                    }
-                }
-                return _instance;
-            }
-        }
-        #endregion
+		#region Standard Singleton Implementation
+		/// <summary>
+		/// Standard Singleton Implementation
+		/// </summary>
+		public static Synchronizer Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					lock (m_lock)
+					{
+						if (_instance == null)
+						{
+							_instance = new Synchronizer();
+						}
+					}
+				}
+				return _instance;
+			}
+		}
+		#endregion
 
-        #region Index Synchronization
-        /// <summary>
-        /// Lock the index to tell everybody that index is going to change
-        /// </summary>
-        public void LockIndex(object obj)
-        {
-            Monitor.Enter(m_indexerLock);
-            Logger.Instance.LogDebug("Acquired Index lock");
-            // TODO: This function should be blocking. Should return only when the lock is acquired
-            m_bIndexLocked = true;
-            m_objThatHoldsLock = obj;
-        }
+		#region Index Synchronization
+		/// <summary>
+		/// Lock the index to tell everybody that index is going to change
+		/// </summary>
+		public void LockIndex(object obj)
+		{
+			Monitor.Enter(m_indexerLock);
+			Logger.Instance.LogDebug("Acquired Index lock");
+			// TODO: This function should be blocking. Should return only when the lock is acquired
+			m_objThatHoldsLock = obj;
+		}
 
-        /// <summary>
-        /// Release the lock
-        /// </summary>
-        public void ReleaseIndex(object obj)
-        {
-            if (m_objThatHoldsLock != obj)
-            {
-                return;
-                //throw new Exception("Different object trying to release lock");
-            }
-            m_bIndexLocked = false;
-            Monitor.Exit(m_indexerLock);
-            Logger.Instance.LogDebug("Released Index lock");
-        }
-        #endregion
-    }
+		/// <summary>
+		/// Release the lock
+		/// </summary>
+		public void ReleaseIndex(object obj)
+		{
+			if (m_objThatHoldsLock != obj)
+			{
+				return;
+				//throw new Exception("Different object trying to release lock");
+			}
+			Monitor.Exit(m_indexerLock);
+			Logger.Instance.LogDebug("Released Index lock");
+		}
+		#endregion
+	}
 }
