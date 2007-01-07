@@ -1,5 +1,5 @@
 // Yammy - Yahoo Messenger Archives Decoder
-// Copyright (C) 2005-2006, Pravin Paratey (pravinp at gmail dot com)
+// Copyright (C) 2005-2007, Pravin Paratey (pravinp at gmail dot com)
 // http://yammy.sourceforge.net
 //
 // This program is free software; you can redistribute it and/or
@@ -285,7 +285,7 @@ namespace Yammy
 					break;
 				case "/show":
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Showing conversations for: " + queryString["localuser"], Common.GetLocalUserFriends(queryString["localuser"])));
+						ConstructHTML("Conversations for " + queryString["localuser"], Common.GetLocalUserFriends(queryString["localuser"])));
 					break;
 				case "/search": // /search?query=[]&page=[]
 					responseData = Encoding.UTF8.GetBytes(
@@ -294,8 +294,11 @@ namespace Yammy
 				case "/decode": // /decode?localuser=[]&type=[c|i|m]&remoteuser=[]&fname=[]&page=[]
 					string strDecode = Decode.DoDecode(queryString);
 					string localUser = queryString["localuser"];
+					string remoteUser = queryString["remoteuser"];
 
-					responseData = Encoding.UTF8.GetBytes(ConstructHTML("Title", strDecode));
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Conversations between " + localUser + " and " + remoteUser, 
+						strDecode));
 					break;
 				case "/settings":
 					if (queryString != null)
@@ -310,7 +313,9 @@ namespace Yammy
 					{
 						// POPULATE DATA AND SERVE
 					}
-					responseData = Encoding.UTF8.GetBytes("TODO");
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Settings", "Todo")
+						);
 					break;
 				case "/export":
 					//localUser = queryString["localuser"];
@@ -322,6 +327,11 @@ namespace Yammy
 					//t.SetApartmentState(ApartmentState.STA);
 					//t.Start(exportParams);
 					responseData = Encoding.UTF8.GetBytes("TODO");
+					break;
+				case "/help":
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Help", "Help")
+					);
 					break;
 				default:
 					#region Other file

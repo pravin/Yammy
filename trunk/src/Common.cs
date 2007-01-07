@@ -1,5 +1,5 @@
 // Yammy - Yahoo Messenger Archives Decoder
-// Copyright (C) 2005-2006, Pravin Paratey (pravinp at gmail dot com)
+// Copyright (C) 2005-2007, Pravin Paratey (pravinp at gmail dot com)
 // http://yammy.sourceforge.net
 //
 // This program is free software; you can redistribute it and/or
@@ -107,9 +107,9 @@ namespace Yammy
 @"<h1>Search</h1>
 	<div class='search-box'>
 		<form action='/search' method='get'>
-			<input type='textbox' name='search' />
-			<input type='button' name='submit' value='Go!' />
-			[ <a href='#'>Advanced</a> ]
+			<input type='textbox' name='query' />
+			<input type='submit' value='Go!' />
+			[ <a href='/search?advanced=true'>Advanced</a> ]
 		</form>
 	</div>
 <h1>Users</h1>");
@@ -187,7 +187,7 @@ namespace Yammy
 		/// <returns></returns>
 		public static DateTime GetDateTimeFromYYYYMMDD(string filename)
 		{
-			int year = 0; int month = 0; int day = 0;
+			int year = 1; int month = 1; int day = 1;
 
 			try
 			{

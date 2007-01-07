@@ -1,6 +1,6 @@
 // Yammy - Yahoo Messenger Archives Decoder
-// Copyright (C) 2005-2006, Pravin Paratey (pravinp at gmail dot com)
-// http://yammy.sf.net
+// Copyright (C) 2005-2007, Pravin Paratey (pravinp at gmail dot com)
+// http://yammy.sourceforge.net
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
