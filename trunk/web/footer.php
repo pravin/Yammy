@@ -6,7 +6,7 @@
 <!-- SF logo -->
 </div>
 </div>
-<div class="footer">This page and its contents are copyright &copy; Pravin Paratey 2003-2005.</div>
+<div class="footer">This page and its contents are copyright &copy; Pravin Paratey 2003-2007.</div>
 <?php do_action('wp_footer'); ?>
 </div></body>
 </html>
