@@ -70,6 +70,27 @@ namespace Yammy
 
 				retVal[i].LocalUser = strLocalUser;
 
+				bool archivingEnabled = false;
+				try
+				{
+					string strKey = @"Software\Yahoo\pager\profiles\" + strLocalUser + @"\Archive";
+					RegistryKey key = Registry.CurrentUser.OpenSubKey(strKey, false);
+					if (key != null)
+					{
+						bool autoDelete = Convert.ToBoolean(key.GetValue("AutoDelete"));
+						bool enabled = Convert.ToBoolean(key.GetValue("Enabled"));
+						bool initialized = Convert.ToBoolean(key.GetValue("Initialized"));
+
+						archivingEnabled = (!autoDelete) && enabled && initialized;
+						key.Close();
+					}
+				}
+				catch (Exception e)
+				{
+					Logger.Instance.LogException(e);
+				}
+				retVal[i].ArchivingEnabled = archivingEnabled;
+
 				if (Directory.Exists(strRemotePath))
 				{
 					remoteUsers = Directory.GetDirectories(strRemotePath);
@@ -102,27 +123,6 @@ namespace Yammy
 					string strLastConvoDate = lastConvoDate.ToString();
 
 					retVal[i].LastConvoAt = Common.GetDateTimeFromYYYYMMDD(strLastConvoDate);
-
-					bool archivingEnabled = false;
-					try
-					{
-						string strKey = @"Software\Yahoo\pager\profiles\" + strLocalUser + @"\Archive";
-						RegistryKey key = Registry.CurrentUser.OpenSubKey(strKey, false);
-						if (key != null)
-						{
-							bool autoDelete = Convert.ToBoolean(key.GetValue("AutoDelete"));
-							bool enabled = Convert.ToBoolean(key.GetValue("Enabled"));
-							bool initialized = Convert.ToBoolean(key.GetValue("Initialized"));
-
-							archivingEnabled = (!autoDelete) && enabled && initialized;
-							key.Close();
-						}
-					}
-					catch (Exception e)
-					{
-						Logger.Instance.LogException(e);
-					}
-					retVal[i].ArchivingEnabled = archivingEnabled;
 				}
 			}
 			
@@ -177,6 +177,31 @@ namespace Yammy
 				Logger.Instance.LogException(e);
 			}
 			return retval;
+		}
+
+		/// <summary>
+		/// Sets the archiving status of the user
+		/// </summary>
+		/// <param name="localUser"></param>
+		/// <param name="archiveConvos"></param>
+		public static void SetArchiveStatus(string localUser, bool archiveConvos)
+		{
+			try
+			{
+				string strKey = @"Software\Yahoo\pager\profiles\" + localUser + @"\Archive";
+				RegistryKey key = Registry.CurrentUser.OpenSubKey(strKey, true);
+				if (key != null)
+				{
+					key.SetValue("AutoDelete", 0);
+					key.SetValue("Enabled", archiveConvos ? 1 : 0);
+					key.SetValue("Initialized", 1);
+					key.Close();
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.LogException(e);
+			}
 		}
 	}
 }

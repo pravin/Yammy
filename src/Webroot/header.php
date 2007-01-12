@@ -2,6 +2,7 @@
 <head>
 	<title>Yammy 0.9: <$PageTitle$></title>
 	<link rel="stylesheet" type="text/css" href="display.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
 </head>
 <body>
 <div class="wrapper"><div class="container">

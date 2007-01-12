@@ -103,16 +103,7 @@ namespace Yammy
 		{
 			LocalUserInfo []users = YahooInfo.GetLocalUsers();
 
-			StringBuilder sb = new StringBuilder(
-@"<h1>Search</h1>
-	<div class='search-box'>
-		<form action='/search' method='get'>
-			<input type='textbox' name='query' />
-			<input type='submit' value='Go!' />
-			[ <a href='/search?advanced=true'>Advanced</a> ]
-		</form>
-	</div>
-<h1>Users</h1>");
+			StringBuilder sb = new StringBuilder(Resources.SearchBoxHTMLSnippet + "<h1>Users</h1>");
 			foreach (LocalUserInfo user in users)
 			{
 				sb.AppendFormat(
@@ -122,10 +113,11 @@ namespace Yammy
 		<h2><a href=""/show?localuser={0}"">{0}</a></h2>
 		<em>Total conversations: {2}</em><br />
 		<em>Last conversation: {3}</em><br />
-		<em>Archiving: {4} | <a href='/enablearchiving?localuser={0}'>{5}</a></em><br />
+		<em>Archiving: {4} | <a href='/{5}archiving?localuser={0}'>{6}</a></em><br />
 	</div>
-</div>", user.LocalUser, user.IconPath, user.TotalConvos, user.LastConvoAt.ToShortDateString(), 
-	   user.ArchivingEnabled ? "<b style='color:#933'>Enabled</b>" : "Disabled", user.ArchivingEnabled ? "Disable" : "Enable" );
+</div>", user.LocalUser, user.IconPath, user.TotalConvos, user.LastConvoAt.ToShortDateString(),
+	   user.ArchivingEnabled ? "<b style='color:#393'>Enabled</b>" : "<b style='color:#933'>Disabled</b>", 
+	   user.ArchivingEnabled ? "disable" : "enable", user.ArchivingEnabled ? "Disable" : "Enable");
 			}
 
 			return sb.ToString();
@@ -144,7 +136,11 @@ namespace Yammy
 				localUser + "</div>" + "<h1>Showing conversations for " + localUser + "</h1>";
 
 			StringBuilder sb = new StringBuilder(strBreadCrumb);
-
+			if (!Directory.Exists(strPath))
+			{
+				sb.Append("No conversations found");
+				return sb.ToString();
+			}
 			string[] remoteUsers = Directory.GetDirectories(strPath);
 			foreach (string remoteuser in remoteUsers)
 			{

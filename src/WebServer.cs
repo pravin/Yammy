@@ -333,6 +333,18 @@ namespace Yammy
 						ConstructHTML("Help", "Help")
 					);
 					break;
+				case "/enablearchiving":
+					localUser = queryString["localuser"];
+					YahooInfo.SetArchiveStatus(localUser, true);
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Home", Common.GetIndexPage()));
+					break;
+				case "/disablearchiving":
+					localUser = queryString["localuser"];
+					YahooInfo.SetArchiveStatus(localUser, false);
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Home", Common.GetIndexPage()));
+					break;
 				default:
 					#region Other file
 					strPathFragment = strPathFragment.Replace('/', '\\').Substring(1);

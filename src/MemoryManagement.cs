@@ -16,6 +16,7 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 using System;
+using System.Threading;
 using System.Runtime.InteropServices;
 
 namespace Yammy
@@ -25,14 +26,29 @@ namespace Yammy
 		[DllImport("kernel32.dll")]
 		public static extern bool SetProcessWorkingSetSize(IntPtr proc, int min, int max);
 
+		/// <summary>
+		/// Infinite loop that calls SetProcessWorkingSetSize every 5 mins.
+		/// Run this in a different thread
+		/// </summary>
 		public static void FlushMemory()
 		{
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+			while (true)
 			{
-				SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+				GC.Collect();
+				GC.WaitForPendingFinalizers();
+				if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				{
+					SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+				}
+				Thread.Sleep(1000 * 60 * 5); // Reclaim memory every 5 mins
 			}
+		}
+
+		public static void Start()
+		{
+			Thread t = new Thread(new ThreadStart(FlushMemory));
+			t.Name = "MemoryCollect";
+			t.Start();
 		}
 	}
 }
