@@ -368,6 +368,16 @@
   <data name="PrevPage" xml:space="preserve">
 	<value>Prev Page</value>
   </data>
+  <data name="SearchBoxHTMLSnippet" xml:space="preserve">
+	<value>&lt;h1&gt;Search&lt;/h1&gt;
+	&lt;div class='search-box'&gt;
+		&lt;form action='/search' method='get'&gt;
+			&lt;input type='textbox' name='query' /&gt;
+			&lt;input type='submit' value='Go!' /&gt;
+			[ &lt;a href='/search?advanced=true'&gt;Advanced&lt;/a&gt; ]
+		&lt;/form&gt;
+	&lt;/div&gt;</value>
+  </data>
   <data name="ServerString" xml:space="preserve">
 	<value>Yammy</value>
   </data>

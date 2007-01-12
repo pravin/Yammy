@@ -48,7 +48,7 @@ namespace Yammy
 			fileExplorer = new FileExplorer();
 			fileExplorer.Run(false); // Dont be aggressive
 
-			MemoryManagement.FlushMemory();
+			MemoryManagement.Start();
 
 			Application.Run();
 

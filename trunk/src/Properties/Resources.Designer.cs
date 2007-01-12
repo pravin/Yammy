@@ -158,6 +158,22 @@ namespace Yammy.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;h1&gt;Search&lt;/h1&gt;
+        ///	&lt;div class=&apos;search-box&apos;&gt;
+        ///		&lt;form action=&apos;/search&apos; method=&apos;get&apos;&gt;
+        ///			&lt;input type=&apos;textbox&apos; name=&apos;query&apos; /&gt;
+        ///			&lt;input type=&apos;submit&apos; value=&apos;Go!&apos; /&gt;
+        ///			[ &lt;a href=&apos;/search?advanced=true&apos;&gt;Advanced&lt;/a&gt; ]
+        ///		&lt;/form&gt;
+        ///	&lt;/div&gt;.
+        /// </summary>
+        internal static string SearchBoxHTMLSnippet {
+            get {
+                return ResourceManager.GetString("SearchBoxHTMLSnippet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Yammy.
         /// </summary>
         internal static string ServerString {

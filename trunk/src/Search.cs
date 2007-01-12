@@ -29,7 +29,7 @@ namespace Yammy
 	{
 		public static string DoSearch(NameValueCollection queryString)
 		{
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder(Resources.SearchBoxHTMLSnippet);
 			const int SEARCHRESULTS_PER_PAGE = 10;
 			if (queryString != null)
 			{
@@ -50,14 +50,21 @@ namespace Yammy
 				{
 					return "No Index found";
 				}
+				sb.Append("<h1>Searching for " + searchTerm + "</h1>");
+				if (searchResults.Length < 1)
+				{
+					sb.Append("No results found");
+					return sb.ToString();
+				}
+				
 				sb.Append("<div style=\"text-align:center;font-style:italic\">" +
 						  string.Format(Resources.NumSearchResults, offset + 1, offset + searchResults.Length) + "</div>");
 				sb.Append("<ol>");
 				foreach (IndexInfo result in searchResults)
 				{
-					sb.Append("<li><a href=\"" + "decode?localuser=" + result.LocalUser +
+					sb.Append("<li><a href=\"/decode?localuser=" + result.LocalUser +
 						"&remoteuser=" + result.RemoteUser + 
-						Uri.EscapeDataString(result.Location) + "\">" +
+						"&type=i&fname=" + System.IO.Path.GetFileNameWithoutExtension(result.Location) + "\">" +
 						string.Format(Resources.ConversationBetween, result.LocalUser, result.RemoteUser) +
 						"</a><br />" + GetExcerpt(result.Message, searchTerm) + "</li>");
 				}
