@@ -1,0 +1,143 @@
+/* Yammy 0.9 Stylesheet (Print)
+ * http://yammy.sf.net
+ * Email: pravinp(at)gmail[dot]com
+ */
+ 
+body {
+	font-family:trebuchet ms, sans serif;
+	font-size:10pt;
+	margin:0;padding:0;
+}
+
+td {
+	font-size:10pt;
+}
+
+.wrapper {
+	width:708px;
+}
+
+.container {
+	width:700px;
+	text-align:left;
+}
+
+.header {
+	display:none;
+}
+
+
+.nav-bar {
+	display:none;
+}
+
+.content {
+	padding:20px;
+	float:left;
+	width:660px;
+	_width:692px;
+}
+
+.content h1 {
+	font-size:12pt;
+	color:#390;
+	border:0;
+	border-bottom:1px solid #390;
+}
+
+.search-box {
+	display:none;
+}
+
+.cascade {
+	padding:0;
+	float:left;
+	/*clear:both;*/
+	width:325px;
+	height:120px;
+}
+
+.cascade:hover {
+	background-color:#333;
+}
+
+.cascade img {
+	padding:5px;
+	background-color:#eee;
+	border:1px solid #999;
+}
+
+.cascade a {
+	text-decoration:none;
+}
+
+.cascade .avatar {
+	float:left;
+}
+
+.cascade .desc {
+	float:left;
+	padding:0;
+	padding-left:20px;
+	font-size:8pt;
+	font-style:italic;
+	color:#666;
+}
+
+.cascade h2 {
+	font-size:12pt;
+	font-weight:normal;
+	padding:0;margin:0;
+	font-style:normal;
+}
+
+.footer {
+	clear:both;
+	border:0;
+	border-top:1px #999 solid;
+	padding:10px;
+	font-size:8pt;
+	text-align:center;
+}
+
+.page-nav {
+	display:none;
+}
+
+.convo-started {
+	padding-top:10px;
+	padding-bottom:10px;
+	color:#090;
+}
+.date {
+	font-size:8pt;
+	color:#300;
+}
+.local {
+	font-weight:bold;
+	font-size:8pt;
+	color:#888;
+	font-family:Tahoma;
+}
+.remote {
+	font-weight:bold;
+	font-size:8pt;
+	color:#339;
+	font-family:Tahoma;
+}
+.msg {
+	font-size:10pt;
+	font-family:Arial;
+}
+.buzz {
+	color:#800;
+	font-weight:bold;
+}
+
+.crumb {
+	background-color:#ffc;
+	padding:4px;
+	border:0;
+	border-top:1px solid #ee6;
+	border-bottom:1px solid #ee6;
+}
