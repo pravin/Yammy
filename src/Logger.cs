@@ -43,19 +43,11 @@ namespace Yammy
 		{
 			m_bAlternate = false;
 			m_logQueue = new Queue(100, 10);
-			string strLogPath = "YammyLog.html";
+			string strLogPath = "Webroot\\YammyLog.html";
 
-			if (Settings.Default.ApplicationPath != null && Settings.Default.ApplicationPath != string.Empty)
-			{
-				try
-				{
-					strLogPath = Path.Combine(Settings.Default.ApplicationPath, strLogPath);
-				}
-				catch { }
-			}
 			m_objStreamWriter = new StreamWriter(strLogPath, false, Encoding.UTF8);
 			m_objStreamWriter.WriteLine("<html><head><title>Yammy Log file</title>");
-			m_objStreamWriter.WriteLine("<link rel=\"stylesheet\" href=\"style.css\" />");
+			m_objStreamWriter.WriteLine("<link rel=\"stylesheet\" href=\"display.css\" />");
 			m_objStreamWriter.WriteLine("</head><body>");
 			m_objStreamWriter.WriteLine("<div class=\"header\"><a href=\"http://yammy.sf.net\">Website</a></div>");
 			m_objStreamWriter.WriteLine("<div class=\"container\"><div class=\"content\">");

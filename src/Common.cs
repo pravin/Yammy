@@ -146,22 +146,19 @@ namespace Yammy
 			{
 				int lastConvoDate = 0;
 				int totalConversations = 0;
-				foreach (string remoteUser in remoteUsers)
+				
+				string[] files = Directory.GetFiles(remoteuser);
+				foreach (string file in files)
 				{
-					string[] files = Directory.GetFiles(remoteUser);
-					foreach (string file in files)
+					try
 					{
-						try
-						{
-							int iDate = Int32.Parse(Path.GetFileNameWithoutExtension(file).Substring(0, 8));
-							if (iDate > lastConvoDate)
-								lastConvoDate = iDate;
-						}
-						catch { }
+						int iDate = Int32.Parse(Path.GetFileNameWithoutExtension(file).Substring(0, 8));
+						if (iDate > lastConvoDate)
+							lastConvoDate = iDate;
 					}
-					totalConversations += files.Length;
+					catch { }
 				}
-
+				totalConversations += files.Length;
 				sb.AppendFormat(
 @"<div class=""cascade"">
 	<div class=""avatar""><a href=""/decode?localuser={0}&remoteuser={1}&type=i""><img src=""/images/generic.png"" width=96 height=96 /></a></div>
@@ -170,8 +167,9 @@ namespace Yammy
 		<em>Total conversations: {2}</em><br />
 		<em>Last conversation: {3}</em><br />
 	</div>
-</div>", localUser, Path.GetFileNameWithoutExtension(remoteuser), totalConversations, 
+</div>", localUser, Path.GetFileNameWithoutExtension(remoteuser), totalConversations,
 	   GetDateTimeFromYYYYMMDD(lastConvoDate.ToString()).ToShortDateString());
+				
 			}
 			return sb.ToString();
 		}
