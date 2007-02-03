@@ -54,6 +54,7 @@ namespace Yammy
 
 			fileExplorer.Stop();
 			WebServer.Instance.Stop();
+			MemoryManagement.KillThread();
 			LOG.LogDebug("Exiting Yammy");
 			Logger.Instance.Dispose();
 		}
