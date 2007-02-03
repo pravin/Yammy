@@ -23,6 +23,7 @@ namespace Yammy
 {
 	public class MemoryManagement
 	{
+		static Thread m_staticThread;
 		[DllImport("kernel32.dll")]
 		public static extern bool SetProcessWorkingSetSize(IntPtr proc, int min, int max);
 
@@ -32,23 +33,32 @@ namespace Yammy
 		/// </summary>
 		public static void FlushMemory()
 		{
-			while (true)
+			try
 			{
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
-				if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+				while (true)
 				{
-					SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+					GC.Collect();
+					GC.WaitForPendingFinalizers();
+					if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+					{
+						SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
+					}
+					Thread.Sleep(1000 * 60 * 5); // Reclaim memory every 5 mins
 				}
-				Thread.Sleep(1000 * 60 * 5); // Reclaim memory every 5 mins
 			}
+			catch (ThreadAbortException) { }
 		}
 
 		public static void Start()
 		{
-			Thread t = new Thread(new ThreadStart(FlushMemory));
-			t.Name = "MemoryCollect";
-			t.Start();
+			Thread m_staticThread = new Thread(new ThreadStart(FlushMemory));
+			m_staticThread.Name = "MemoryCollect";
+			m_staticThread.Start();
+		}
+
+		public static void KillThread()
+		{
+			m_staticThread.Abort();
 		}
 	}
 }
