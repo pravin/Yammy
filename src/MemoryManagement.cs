@@ -51,7 +51,7 @@ namespace Yammy
 
 		public static void Start()
 		{
-			Thread m_staticThread = new Thread(new ThreadStart(FlushMemory));
+			m_staticThread = new Thread(new ThreadStart(FlushMemory));
 			m_staticThread.Name = "MemoryCollect";
 			m_staticThread.Start();
 		}
