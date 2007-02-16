@@ -19,8 +19,6 @@
 using System;
 using System.Windows.Forms;
 
-using Yammy.Properties;
-
 namespace Yammy
 {
 	/// <summary>
@@ -37,16 +35,16 @@ namespace Yammy
 		{
 			// Create Context Menu
 			m_contextMenu = new ContextMenu();
-			m_contextMenu.MenuItems.Add(Resources.TrayMenuOpen, OnDoubleClick);
-			m_contextMenu.MenuItems.Add(Resources.TrayMenuSettings, OnSettingsClick);
+			m_contextMenu.MenuItems.Add(Resources.Instance.GetString("TrayMenuOpen"), OnDoubleClick);
+			m_contextMenu.MenuItems.Add(Resources.Instance.GetString("TrayMenuSettings"), OnSettingsClick);
 			m_contextMenu.MenuItems.Add("-");
-			m_contextMenu.MenuItems.Add(Resources.TrayMenuExit, OnExitClick);
+			m_contextMenu.MenuItems.Add(Resources.Instance.GetString("TrayMenuExit"), OnExitClick);
 
 			// Create Tray Icon
 			m_trayIcon = new NotifyIcon();
 			m_trayIcon.Text = "Yammy";
 			m_trayIcon.Visible = true;
-			m_trayIcon.Icon = Resources.MainIcon;
+			m_trayIcon.Icon = Yammy.Properties.Resources.MainIcon;
 			m_trayIcon.ContextMenu = m_contextMenu;
 			m_trayIcon.MouseDoubleClick += new MouseEventHandler(OnDoubleClick);
 		}

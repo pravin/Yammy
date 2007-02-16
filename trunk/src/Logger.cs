@@ -21,8 +21,6 @@ using System.Text;
 using System.Threading;
 using System.Collections;
 
-using Yammy.Properties;
-
 namespace Yammy
 {
 	/// <summary>
@@ -43,14 +41,9 @@ namespace Yammy
 		{
 			m_bAlternate = false;
 			m_logQueue = new Queue(100, 10);
-			string strLogPath = "Webroot\\YammyLog.html";
+			string strLogPath = "Webroot\\log.html";
 
 			m_objStreamWriter = new StreamWriter(strLogPath, false, Encoding.UTF8);
-			m_objStreamWriter.WriteLine("<html><head><title>Yammy Log file</title>");
-			m_objStreamWriter.WriteLine("<link rel=\"stylesheet\" href=\"display.css\" />");
-			m_objStreamWriter.WriteLine("</head><body>");
-			m_objStreamWriter.WriteLine("<div class=\"header\"><a href=\"http://yammy.sf.net\">Website</a></div>");
-			m_objStreamWriter.WriteLine("<div class=\"container\"><div class=\"content\">");
 			m_objStreamWriter.WriteLine("<h1>Yammy log file [" + DateTime.Now.ToLongDateString() + "]</h1>");
 
 			m_timer = new Timer(new TimerCallback(Flush), null, 0, 1000 * 60); // Once a minute, flush log
@@ -62,8 +55,6 @@ namespace Yammy
 			m_timer.Dispose();
 			if (m_objStreamWriter != null)
 			{
-				m_objStreamWriter.WriteLine("<div class=\"footer\">Yammy &copy; 2005-2006, Pravin Paratey</div>");
-				m_objStreamWriter.WriteLine("</div></div></body></html>");
 				m_objStreamWriter.Flush();
 				m_objStreamWriter.Close();
 				m_objStreamWriter = null;

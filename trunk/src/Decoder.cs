@@ -20,8 +20,6 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Yammy.Properties;
-
 namespace Yammy
 {
 	/// <summary>
@@ -240,7 +238,7 @@ namespace Yammy
 			string date = MakeDTFromCTime(timeStamp).ToLongDateString();
 
 			sb.Append("<div class=\"convo-started\">");
-			sb.AppendFormat(Resources.ConversationStarted, date); 
+			sb.AppendFormat(Resources.Instance.GetString("ConversationStarted"), date); 
 			sb.Append("</div>");
 		}
 

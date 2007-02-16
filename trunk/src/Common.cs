@@ -21,8 +21,6 @@ using System.IO;
 using System.Text;
 using Microsoft.Win32;
 
-using Yammy.Properties;
-
 namespace Yammy
 {
 	public static class Common
@@ -39,7 +37,7 @@ namespace Yammy
 			StreamReader sr = null;
 			try
 			{
-				sr = new StreamReader(path);
+				sr = new StreamReader(File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 				strContent = sr.ReadToEnd();
 			}
 			catch (Exception e)
@@ -103,7 +101,7 @@ namespace Yammy
 		{
 			LocalUserInfo []users = YahooInfo.GetLocalUsers();
 
-			StringBuilder sb = new StringBuilder(Resources.SearchBoxHTMLSnippet + "<h1>Users</h1>");
+			StringBuilder sb = new StringBuilder(Resources.Instance.GetString("SearchBoxHTMLSnippet") + "<h1>Users</h1>");
 			foreach (LocalUserInfo user in users)
 			{
 				sb.AppendFormat(

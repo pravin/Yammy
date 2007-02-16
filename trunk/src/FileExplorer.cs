@@ -130,23 +130,6 @@ namespace Yammy
 				Logger.Instance.LogException(e);
 			}
 		}
-		/*
-				public void Pause()
-				{
-					if (m_objThread != null && m_objThread.ThreadState == ThreadState.Running)
-					{
-						m_objThread.Suspend();
-					}
-				}
-
-				public void Resume()
-				{
-					if (m_objThread != null && m_objThread.ThreadState == ThreadState.Suspended)
-					{
-						m_objThread.Resume();
-					}
-				}
-		*/
 		public void Stop()
 		{
 			Logger.Instance.LogDebug("FileExplorer stop requested");

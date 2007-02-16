@@ -18,10 +18,7 @@
 
 using System;
 using System.IO;
-
 using System.Windows.Forms;
-
-using Yammy.Properties;
 
 namespace Yammy
 {
@@ -143,7 +140,7 @@ namespace Yammy
 						}
 						catch (Exception ex)
 						{
-							MessageBox.Show(ex.Message, Resources.Error);
+							MessageBox.Show(ex.Message, Resources.Instance.GetString("Error"));
 						}
 						finally
 						{

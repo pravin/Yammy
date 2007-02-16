@@ -43,7 +43,7 @@ namespace Yammy
 			TrayIcon trayIcon = new TrayIcon();
 
 			FileExplorer fileExplorer = null;
-			IndexProgressHandler dlgtIndexProgressHandler = null;
+			//IndexProgressHandler dlgtIndexProgressHandler = null;
 
 			fileExplorer = new FileExplorer();
 			fileExplorer.Run(false); // Dont be aggressive
