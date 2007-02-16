@@ -101,21 +101,25 @@ namespace Yammy
 		{
 			LocalUserInfo []users = YahooInfo.GetLocalUsers();
 
-			StringBuilder sb = new StringBuilder(Resources.Instance.GetString("SearchBoxHTMLSnippet") + "<h1>Users</h1>");
+			StringBuilder sb = new StringBuilder("<h1>" + Resources.Instance.GetString("Users") + "</h1>");
 			foreach (LocalUserInfo user in users)
 			{
-				sb.AppendFormat(
-@"<div class=""cascade"">
-	<div class=""avatar""><a href=""/show?localuser={0}""><img src=""{1}"" width=96 height=96 /></a></div>
-	<div class=""desc"">
-		<h2><a href=""/show?localuser={0}"">{0}</a></h2>
-		<em>Total conversations: {2}</em><br />
-		<em>Last conversation: {3}</em><br />
-		<em>Archiving: {4} | <a href='/{5}archiving?localuser={0}'>{6}</a></em><br />
-	</div>
-</div>", user.LocalUser, user.IconPath, user.TotalConvos, user.LastConvoAt.ToShortDateString(),
-	   user.ArchivingEnabled ? "<b style='color:#393'>Enabled</b>" : "<b style='color:#933'>Disabled</b>", 
-	   user.ArchivingEnabled ? "disable" : "enable", user.ArchivingEnabled ? "Disable" : "Enable");
+				string strArchivingStatus = user.ArchivingEnabled ?
+					"<b style='color:#393'>" + Resources.Instance.GetString("ArchivingEnabled") + "</b>" :
+					"<b style='color:#933'>" + Resources.Instance.GetString("ArchivingDisabled") + "</b>";
+
+				sb.Append(@"<div class=""cascade"">");
+				sb.AppendFormat(@"<div class=""avatar""><a href=""/show?localuser={0}"">
+					<img src=""{1}"" width=96 height=96 /></a></div>
+					<div class=""desc""><h2><a href=""/show?localuser={0}"">{0}</a></h2>", user.LocalUser, user.IconPath);
+				sb.AppendFormat("<em>" + Resources.Instance.GetString("TotalConvos") + "</em><br />", user.TotalConvos);
+				sb.AppendFormat("<em>" + Resources.Instance.GetString("LastConvo") + "</em><br />", user.LastConvoAt.ToShortDateString());
+				sb.AppendFormat("<em>" + Resources.Instance.GetString("Archiving"), strArchivingStatus);
+				sb.AppendFormat(" | <a href='/{1}archiving?localuser={0}'>", 
+					user.LocalUser, user.ArchivingEnabled ? "disable" : "enable");
+				sb.Append(user.ArchivingEnabled ? Resources.Instance.GetString("ArchivingDisabled") : 
+						Resources.Instance.GetString("ArchivingEnabled"));
+				sb.Append("</a></em><br /></div></div>");
 			}
 
 			return sb.ToString();
@@ -130,13 +134,14 @@ namespace Yammy
 		{
 			string strPath = ConstructPath(localUser, "i", string.Empty, string.Empty);
 
-			string strBreadCrumb = "<div class='crumb'><a href='/'>Users</a> &raquo; " +
-				localUser + "</div>" + "<h1>Showing conversations for " + localUser + "</h1>";
+			string strBreadCrumb = "<div class='crumb'><a href='/'>" + Resources.Instance.GetString("Users") + 
+				"</a> &raquo; " + localUser + "</div><h1>" + 
+				string.Format(Resources.Instance.GetString("ShowingConvoFor"), localUser) + "</h1>";
 
 			StringBuilder sb = new StringBuilder(strBreadCrumb);
 			if (!Directory.Exists(strPath))
 			{
-				sb.Append("No conversations found");
+				sb.Append(Resources.Instance.GetString("NoConvoFound"));
 				return sb.ToString();
 			}
 			string[] remoteUsers = Directory.GetDirectories(strPath);
@@ -162,11 +167,13 @@ namespace Yammy
 	<div class=""avatar""><a href=""/decode?localuser={0}&remoteuser={1}&type=i""><img src=""/images/generic.png"" width=96 height=96 /></a></div>
 	<div class=""desc"">
 		<h2><a href=""/decode?localuser={0}&remoteuser={1}&type=i"">{1}</a></h2>
-		<em>Total conversations: {2}</em><br />
-		<em>Last conversation: {3}</em><br />
-	</div>
-</div>", localUser, Path.GetFileNameWithoutExtension(remoteuser), totalConversations,
-	   GetDateTimeFromYYYYMMDD(lastConvoDate.ToString()).ToShortDateString());
+		<em>", localUser, Path.GetFileNameWithoutExtension(remoteuser));
+
+				sb.AppendFormat(Resources.Instance.GetString("TotalConvos"), totalConversations);
+				sb.Append("</em><br /><em>");
+				sb.AppendFormat(Resources.Instance.GetString("LastConvo"), 
+					GetDateTimeFromYYYYMMDD(lastConvoDate.ToString()).ToShortDateString());
+				sb.Append("</em><br /></div></div>");
 				
 			}
 			return sb.ToString();

@@ -195,13 +195,14 @@ namespace Yammy
 				Hits hits = m_indexSearcher.Search(query);
 				int len = hits.Length();
 				int start = offset;
-				int end = len > start + 10 ? start + 10 : len - start;
-				if (len > 0)
+				int end = len > start + 10 ? start + 10 : len;
+				if (len > 0 && start <= len)
 				{
 					retVal = new IndexInfo[end - start];
+					int count = 0;
 					for (int i = start; i < end; i++)
 					{
-						retVal[i] = new IndexInfo(hits.Doc(i).Get("localuser"), hits.Doc(i).Get("remoteuser"),
+						retVal[count++] = new IndexInfo(hits.Doc(i).Get("localuser"), hits.Doc(i).Get("remoteuser"),
 												  hits.Doc(i).Get("message"), hits.Doc(i).Get("location"));
 					}
 				}

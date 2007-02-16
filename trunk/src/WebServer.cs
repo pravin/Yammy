@@ -83,6 +83,11 @@ namespace Yammy
 		{
 			get { return "image/icon"; }
 		}
+
+		public static string JAVASCRIPT
+		{
+			get { return "text/javascript"; }
+		}
 	}
 	#endregion
 
@@ -255,11 +260,12 @@ namespace Yammy
 			string strRequest = Encoding.ASCII.GetString(inbuf);
 			NameValueCollection queryString = null;
 			Uri uriRequest = ValidateRequest(strRequest);
+			
 			Logger.Instance.LogDebug(uriRequest.ToString());
 
 			if (uriRequest == null)
 			{
-				Logger.Instance.LogDebug("Invalid Request" + strRequest);
+				Logger.Instance.LogDebug("Invalid Request:" + strRequest);
 				SendErrorResponse(ref sock, HttpResponseCode.InvalidRequest, "Invalid request:\r\n" + strRequest);
 				return;
 			}
@@ -285,12 +291,20 @@ namespace Yammy
 				case "/show":
 					responseData = Encoding.UTF8.GetBytes(
 						ConstructHTML(
-							string.Format(Resources.Instance.GetString("ConversationFor"), queryString["localuser"]), 
+							string.Format(Resources.Instance.GetString("ShowingConvoFor"), queryString["localuser"]), 
 							Common.GetLocalUserFriends(queryString["localuser"])));
 					break;
 				case "/search": // /search?query=[]&page=[]
+					string query = queryString["query"] as string;
+					if(query == null)
+					{
+						query = string.Empty;
+					}
+					query = Uri.EscapeDataString(query).Trim();
+
+					string strTitle = string.Format(Resources.Instance.GetString("SearchingFor"), query);
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML(Resources.Instance.GetString("SearchResults"), Search.DoSearch(queryString)));
+						ConstructHTML(strTitle, Search.DoSearch(queryString)));
 					break;
 				case "/decode": // /decode?localuser=[]&type=[c|i|m]&remoteuser=[]&fname=[]&page=[]
 					string strDecode = Decode.DoDecode(queryString);
@@ -302,7 +316,10 @@ namespace Yammy
 					break;
 				case "/settings":
 					string strOutput = Config.Instance.DoSettings(queryString);
-					responseData = Encoding.UTF8.GetBytes(ConstructHTML("Settings", strOutput));
+					ReadCommonFiles();
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML(Resources.Instance.GetString("Settings"), strOutput)
+					);
 					break;
 				case "/export":
 					//localUser = queryString["localuser"];
@@ -313,11 +330,18 @@ namespace Yammy
 					//Thread t = new Thread(new ParameterizedThreadStart(Export.ExportMe));
 					//t.SetApartmentState(ApartmentState.STA);
 					//t.Start(exportParams);
-					responseData = Encoding.UTF8.GetBytes("TODO");
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML(Resources.Instance.GetString("Export"), "ToDo")
+					);
 					break;
 				case "/help":
+					string helpfname = Path.Combine(m_strWebRoot, "help_" + Config.Instance.Locale + ".php");
+					if(!File.Exists(helpfname))
+					{
+						helpfname = Path.Combine(m_strWebRoot, "help_en-US.php");
+					}
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Help", "Help")
+						ConstructHTML(Resources.Instance.GetString("Help"), Common.ReadTextFile(helpfname))
 					);
 					break;
 				case "/log":
@@ -329,13 +353,13 @@ namespace Yammy
 					localUser = queryString["localuser"];
 					YahooInfo.SetArchiveStatus(localUser, true);
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Home", Common.GetIndexPage()));
+						ConstructHTML(Resources.Instance.GetString("Home"), Common.GetIndexPage()));
 					break;
 				case "/disablearchiving":
 					localUser = queryString["localuser"];
 					YahooInfo.SetArchiveStatus(localUser, false);
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Home", Common.GetIndexPage()));
+						ConstructHTML(Resources.Instance.GetString("Home"), Common.GetIndexPage()));
 					break;
 				default:
 					#region Other file
@@ -357,7 +381,6 @@ namespace Yammy
 						return;
 					}
 
-
 					BinaryReader reader = null;
 					try
 					{
@@ -378,10 +401,11 @@ namespace Yammy
 						return;
 					}
 
-					string strExtention = strFilePath.Substring(strFilePath.Length - 4);
+					int pos = strFilePath.IndexOf('.');
+					string strExtention = strFilePath.Substring(pos);
 
 					if (strExtention.Equals(".jpg", StringComparison.InvariantCultureIgnoreCase)
-						|| strExtention.Equals("jpeg", StringComparison.InvariantCultureIgnoreCase))
+						|| strExtention.Equals(".jpeg", StringComparison.InvariantCultureIgnoreCase))
 					{
 						strContentType = ContentType.IMAGE_JPEG;
 					}
@@ -400,6 +424,10 @@ namespace Yammy
 					else if (strExtention.Equals(".ico", StringComparison.InvariantCultureIgnoreCase))
 					{
 						strContentType = ContentType.IMAGE_ICO;
+					}
+					else if (strExtention.Equals(".js", StringComparison.InvariantCultureIgnoreCase))
+					{
+						strContentType = ContentType.JAVASCRIPT;
 					}
 					else
 					{
@@ -461,12 +489,7 @@ namespace Yammy
 			string strErrorPage;
 			try
 			{
-				string strFilePath = Path.Combine(m_strWebRoot, "error.html");
-				reader = new StreamReader(strFilePath, Encoding.UTF8);
-				strErrorPage = reader.ReadToEnd();
-				reader.Close(); reader = null;
-
-				strErrorPage = strErrorPage.Replace("<$ErrorMessage$>", errMessage);
+				strErrorPage = ConstructHTML(Resources.Instance.GetString("Error"), "<b>" + status.ToString() + "</b>" + errMessage);
 			}
 			catch
 			{

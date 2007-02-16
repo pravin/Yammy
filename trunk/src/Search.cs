@@ -28,18 +28,21 @@ namespace Yammy
 	{
 		public static string DoSearch(NameValueCollection queryString)
 		{
-			StringBuilder sb = new StringBuilder(Resources.Instance.GetString("SearchBoxHTMLSnippet"));
+			StringBuilder sb = new StringBuilder();
 			const int SEARCHRESULTS_PER_PAGE = 10;
 			if (queryString != null)
 			{
 				string searchTerm = queryString["query"];
+				if (searchTerm == null)
+					searchTerm = string.Empty;
+				searchTerm = searchTerm.Trim();
 				int offset = 0;
 				try
 				{
-					string pageNumber = queryString["page"];
+					string pageNumber = queryString["offset"];
 					if (pageNumber != null)
 					{
-						offset = Int32.Parse(pageNumber) * SEARCHRESULTS_PER_PAGE; 
+						offset = Int32.Parse(pageNumber); 
 					}
 				}
 				catch { }
@@ -47,19 +50,19 @@ namespace Yammy
 				IndexInfo[] searchResults = search.Search(searchTerm, offset);
 				if (searchResults == null)
 				{
-					return "No Index found";
+					return Resources.Instance.GetString("NoIndexFound");
 				}
-				sb.Append("<h1>Searching for " + searchTerm + "</h1>");
+				sb.Append("<h1>" + string.Format(Resources.Instance.GetString("SearchingFor"), searchTerm) + "</h1>");
 				if (searchResults.Length < 1)
 				{
-					sb.Append("No results found");
+					sb.Append(Resources.Instance.GetString("NoResultsFound"));
 					return sb.ToString();
 				}
 				
 				sb.Append("<div style=\"text-align:center;font-style:italic\">" +
 						  string.Format(Resources.Instance.GetString("NumSearchResults"), 
 						  offset + 1, offset + searchResults.Length) + "</div>");
-				sb.Append("<ol>");
+				sb.Append("<ol start='" + (offset+1) + "'>");
 				foreach (IndexInfo result in searchResults)
 				{
 					sb.Append("<li><a href=\"/decode?localuser=" + result.LocalUser +
@@ -74,14 +77,16 @@ namespace Yammy
 				string strNext = string.Empty;
 				if (searchResults.Length == SEARCHRESULTS_PER_PAGE)
 				{
-					strNext = string.Format("<a href=\"yammy:search?query={0}&offset={1}\">{2}</a>", searchTerm, offset + SEARCHRESULTS_PER_PAGE, "Next");
+					strNext = string.Format("<a href=\"/search?query={0}&offset={1}\">{2}</a>", 
+						searchTerm, offset + SEARCHRESULTS_PER_PAGE, Resources.Instance.GetString("NextPage"));
 					moreResults = true;
 				}
 
 				string strPrev = string.Empty;
 				if (offset > SEARCHRESULTS_PER_PAGE-1)
 				{
-					strPrev = string.Format("<a href=\"yammy:search?query={0}&offset={1}\">{2}</a>", searchTerm, offset + SEARCHRESULTS_PER_PAGE, "Prev");
+					strPrev = string.Format("<a href=\"/search?query={0}&offset={1}\">{2}</a>", 
+						searchTerm, offset - SEARCHRESULTS_PER_PAGE, Resources.Instance.GetString("PrevPage"));
 					moreResults = true;
 				}
 
@@ -92,7 +97,7 @@ namespace Yammy
 			}
 			else // Advanced search
 			{
-				sb.Append("advancedS");
+				sb.Append("ToDo");
 			}
 			return sb.ToString();
 		}
