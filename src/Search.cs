@@ -21,7 +21,6 @@ using System.Text;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
 
-using Yammy.Properties;
 
 namespace Yammy
 {
@@ -29,7 +28,7 @@ namespace Yammy
 	{
 		public static string DoSearch(NameValueCollection queryString)
 		{
-			StringBuilder sb = new StringBuilder(Resources.SearchBoxHTMLSnippet);
+			StringBuilder sb = new StringBuilder(Resources.Instance.GetString("SearchBoxHTMLSnippet"));
 			const int SEARCHRESULTS_PER_PAGE = 10;
 			if (queryString != null)
 			{
@@ -58,14 +57,15 @@ namespace Yammy
 				}
 				
 				sb.Append("<div style=\"text-align:center;font-style:italic\">" +
-						  string.Format(Resources.NumSearchResults, offset + 1, offset + searchResults.Length) + "</div>");
+						  string.Format(Resources.Instance.GetString("NumSearchResults"), 
+						  offset + 1, offset + searchResults.Length) + "</div>");
 				sb.Append("<ol>");
 				foreach (IndexInfo result in searchResults)
 				{
 					sb.Append("<li><a href=\"/decode?localuser=" + result.LocalUser +
 						"&remoteuser=" + result.RemoteUser + 
 						"&type=i&fname=" + System.IO.Path.GetFileNameWithoutExtension(result.Location) + "\">" +
-						string.Format(Resources.ConversationBetween, result.LocalUser, result.RemoteUser) +
+						string.Format(Resources.Instance.GetString("ConversationBetween"), result.LocalUser, result.RemoteUser) +
 						"</a><br />" + GetExcerpt(result.Message, searchTerm) + "</li>");
 				}
 				sb.Append("</ol>");

@@ -23,10 +23,9 @@ using System.Text;
 using System.Threading;
 using System.Collections;
 using System.Net.Sockets;
+using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
-
-using Yammy.Properties;
 
 namespace Yammy
 {
@@ -281,15 +280,17 @@ namespace Yammy
 				case "/":
 				case "/main":
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Home", Common.GetIndexPage()));
+						ConstructHTML(Resources.Instance.GetString("Home"), Common.GetIndexPage()));
 					break;
 				case "/show":
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Conversations for " + queryString["localuser"], Common.GetLocalUserFriends(queryString["localuser"])));
+						ConstructHTML(
+							string.Format(Resources.Instance.GetString("ConversationFor"), queryString["localuser"]), 
+							Common.GetLocalUserFriends(queryString["localuser"])));
 					break;
 				case "/search": // /search?query=[]&page=[]
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Title", Search.DoSearch(queryString)));
+						ConstructHTML(Resources.Instance.GetString("SearchResults"), Search.DoSearch(queryString)));
 					break;
 				case "/decode": // /decode?localuser=[]&type=[c|i|m]&remoteuser=[]&fname=[]&page=[]
 					string strDecode = Decode.DoDecode(queryString);
@@ -297,25 +298,11 @@ namespace Yammy
 					string remoteUser = queryString["remoteuser"];
 
 					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Conversations between " + localUser + " and " + remoteUser, 
-						strDecode));
+						ConstructHTML(string.Format(Resources.Instance.GetString("ConversationBetween"), localUser, remoteUser), strDecode));
 					break;
 				case "/settings":
-					if (queryString != null)
-					{
-						// Save settings
-						string saveSettings = queryString["SaveSettings"];
-						string yahooPath = queryString["YahooPath"];
-						string enableFor = queryString["EnableFor"];
-						string[] userList = enableFor.Split('+');
-					}
-					else
-					{
-						// POPULATE DATA AND SERVE
-					}
-					responseData = Encoding.UTF8.GetBytes(
-						ConstructHTML("Settings", "Todo")
-						);
+					string strOutput = Config.Instance.DoSettings(queryString);
+					responseData = Encoding.UTF8.GetBytes(ConstructHTML("Settings", strOutput));
 					break;
 				case "/export":
 					//localUser = queryString["localuser"];
@@ -331,6 +318,11 @@ namespace Yammy
 				case "/help":
 					responseData = Encoding.UTF8.GetBytes(
 						ConstructHTML("Help", "Help")
+					);
+					break;
+				case "/log":
+					responseData = Encoding.UTF8.GetBytes(
+						ConstructHTML("Yammy Log", Common.ReadTextFile(Path.Combine(m_strWebRoot, "log.html")))
 					);
 					break;
 				case "/enablearchiving":
@@ -361,7 +353,7 @@ namespace Yammy
 					}
 					if (!File.Exists(strFilePath))
 					{
-						SendErrorResponse(ref sock, HttpResponseCode.FileNotFound, Resources.FileNotFound);
+						SendErrorResponse(ref sock, HttpResponseCode.FileNotFound, Resources.Instance.GetString("FileNotFound"));
 						return;
 					}
 
@@ -432,7 +424,7 @@ namespace Yammy
 			const string CRLF = "\r\n";
 			string strHeader =
 				"HTTP/1.1 " + ((int)status).ToString() + CRLF +
-				"Server: " + Resources.ServerString + CRLF +
+				"Server: " + Resources.Instance.GetString("AppName") + CRLF +
 				"Content-Type: " + contentType + CRLF +
 				"Accept-Ranges: bytes" + CRLF +
 				"Content-Length: " + contentLength + CRLF + CRLF;
@@ -564,7 +556,7 @@ namespace Yammy
 		{
 			StringBuilder sb = new StringBuilder((m_fileHeader.Length + m_fileMain.Length + m_fileFooter.Length) * 2);
 			// Header
-			sb.Append(m_fileHeader.Replace("<$PageTitle$>", title));
+			sb.Append(m_fileHeader.Replace("<$PageTitle$>", title).Replace("<$LocaleString$>",Config.Instance.Locale));
 			// Body
 			string strHtml = m_fileMain;
 			strHtml = strHtml.Replace("<$Content$>", content);

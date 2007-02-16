@@ -19,6 +19,8 @@ using System;
 using System.IO;
 using Microsoft.Win32;
 using System.Collections;
+using System.Globalization;
+using System.Collections.Specialized;
 
 namespace Yammy
 {
@@ -49,7 +51,7 @@ namespace Yammy
 		private int m_iIndexUpdateFrequency;
 		private DateTime m_dtIndexLastUpdated;
 		private ArrayList m_arUserList;
-		private string m_strDisplayHtml;
+		private string m_strLocale;
 		#endregion
 
 		const string ConstYahooProfilesPath = "YahooProfilesPath";
@@ -57,6 +59,7 @@ namespace Yammy
 		const string ConstIndexUpdateFrequency = "IndexUpdateFrequency";
 		const string ConstShowEmotes = "ShowEmotes";
 		const string ConstShowLastXMonthsChatLogs = "ShowLastXMonthsChatLogs";
+		const string ConstLocale = "Locale";
 
 		/// <summary>
 		/// Gets a singleton instance of the class
@@ -69,6 +72,7 @@ namespace Yammy
 			}
 		}
 
+		#region Constructor
 		private Config()
 		{
 			try
@@ -78,27 +82,6 @@ namespace Yammy
 				m_strTempIndexPath = Path.Combine(m_strYammyAppData, "TempIndex");
 				m_strIndexPath = Path.Combine(m_strYammyAppData, "Index");
 				m_arUserList = new ArrayList(4);
-
-				string strFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "default.html");
-				m_strDisplayHtml = string.Empty;
-				StreamReader sr = null;
-				if (File.Exists(strFilename))
-				{
-					sr = new StreamReader(strFilename);
-					m_strDisplayHtml = sr.ReadToEnd();
-					sr.Close();
-				}
-
-				strFilename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "dark.css");
-				string strCSS = string.Empty;
-				if (File.Exists(strFilename))
-				{
-					sr = new StreamReader(strFilename);
-					strCSS = sr.ReadToEnd();
-					sr.Close();
-				}
-
-				m_strDisplayHtml = m_strDisplayHtml.Replace("<$ReplaceByStyleSheet$>", strCSS);
 			}
 			catch (IOException e)
 			{
@@ -108,9 +91,15 @@ namespace Yammy
 			ReadConfig();
 			LoadUserList();
 		}
+		#endregion
 
 		/// <summary>
 		/// Fills in variables from the config file
+		/// Variables are:
+		/// - IndexPath
+		/// - IndexUpdateFreq
+		/// - YahooProfilesPath
+		/// - IndexLastUpdated
 		/// </summary>
 		private void ReadConfig()
 		{
@@ -166,6 +155,16 @@ namespace Yammy
 							m_dtIndexLastUpdated = DateTime.MinValue;
 						}
 						break;
+					case ConstLocale:
+						try
+						{
+							m_strLocale = strNameValue[1].Trim();
+						}
+						catch
+						{
+							m_strLocale = "en";
+						}
+						break;
 					default:
 						Logger.Instance.LogError("ReadConfig: " + strNameValue[0]);
 						break;
@@ -173,6 +172,29 @@ namespace Yammy
 
 			}
 			reader.Close();
+		}
+
+		/// <summary>
+		/// Saves configuration options to disk
+		/// </summary>
+		public void SaveConfig()
+		{
+			StreamWriter writer = null;
+
+			try
+			{
+				writer = new StreamWriter(m_strConfigFilePath, false, System.Text.Encoding.UTF8);
+			}
+			catch (IOException e)
+			{
+				Logger.Instance.LogException(e);
+				return;
+			}
+			writer.WriteLine(ConstYahooProfilesPath + "=" + m_strYahooProfilesPath);
+			writer.WriteLine(ConstIndexLastUpdated + "=" + m_dtIndexLastUpdated);
+			writer.WriteLine(ConstIndexUpdateFrequency + "=" + m_iIndexUpdateFrequency);
+			writer.WriteLine(ConstLocale + "=" + m_strLocale);
+			writer.Close(); writer = null;
 		}
 
 		/// <summary>
@@ -216,28 +238,6 @@ namespace Yammy
 					m_arUserList.Add(u);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Saves configuration options to disk
-		/// </summary>
-		public void SaveConfig()
-		{
-			StreamWriter writer = null;
-
-			try
-			{
-				writer = new StreamWriter(m_strConfigFilePath, false, System.Text.Encoding.UTF8);
-			}
-			catch (IOException e)
-			{
-				Logger.Instance.LogException(e);
-				return;
-			}
-			writer.WriteLine(ConstYahooProfilesPath + "=" + m_strYahooProfilesPath);
-			writer.WriteLine(ConstIndexLastUpdated + "=" + m_dtIndexLastUpdated);
-			writer.WriteLine(ConstIndexUpdateFrequency + "=" + m_iIndexUpdateFrequency);
-			writer.Close(); writer = null;
 		}
 
 		/// <summary>
@@ -293,31 +293,85 @@ namespace Yammy
 		{
 			get { return m_arUserList; }
 		}
+
 		/// <summary>
-		/// 
+		/// Gets the Locale as specified by the user
 		/// </summary>
-		public string DisplayHtml
+		public string Locale
 		{
-			get
-			{
-				return m_strDisplayHtml;
-			}
+			get { return m_strLocale; }
 		}
 
-		public string StyleSheet
+		public string DoSettings(NameValueCollection queryString)
 		{
-			get
+			string yahooPath;
+			int updateFreq;
+
+			string[] locales = Directory.GetFiles(@"Webroot", "*.js");
+
+			if (queryString != null)
 			{
-				string css = string.Empty;
+				yahooPath = Uri.EscapeDataString(queryString["YahooPath"]);
+				if (Directory.Exists(yahooPath))
+				{
+					m_strYahooProfilesPath = yahooPath;
+				}
+				else
+				{
+					Logger.Instance.LogDebug("Settings: " + yahooPath + " does not exist");
+				}
+				string updateFrequency = Uri.EscapeDataString(queryString["UpdateFreq"]);
 				try
 				{
-					StreamReader sr = new StreamReader("WebRoot\\default.css");
-					css = sr.ReadToEnd();
-					sr.Close();
+					int freq = Int32.Parse(updateFrequency);
+					m_iIndexUpdateFrequency = freq;
 				}
-				catch { }
-				return css;
+				catch (Exception e)
+				{
+					Logger.Instance.LogDebug("Settings: " + e.Message);
+				}
+				string language = Uri.EscapeDataString(queryString["Language"]);
+				if (language != m_strLocale)
+				{
+					Resources.Instance.LoadVars(Path.Combine(@"Webroot\", m_strLocale + ".js"));
+				}
+				SaveConfig();
 			}
+
+			yahooPath = m_strYahooProfilesPath;
+			updateFreq = m_iIndexUpdateFrequency;
+
+			string languages = @"<select name=""Language"">";
+			foreach (string locale in locales)
+			{
+				try
+				{
+					int start = locale.IndexOf(Path.DirectorySeparatorChar) + 1;
+					int end = locale.IndexOf('.') - 1;
+					string localeName = locale.Substring(start, end - start + 1);
+					CultureInfo culture = CultureInfo.GetCultureInfo(localeName);
+					languages += "<option value='" + localeName +
+						(localeName == m_strLocale ? "' selected='selected" : string.Empty) +
+						"'>" + culture.DisplayName + "</option>";
+				}
+				catch (Exception e)
+				{
+					Logger.Instance.LogException(e);
+				}
+			}
+
+			languages += "</select>";
+
+			string strOutput = @"<form action=""/settings"" method=""GET"">" +
+				@"<table border=""0"" cellspacing=""2"" cellpadding=""5"">" +
+				"<tr><td>" + Resources.Instance.GetString("YahooPath") + "</td><td>" +
+					@"<input name=""YahooPath"" value=""" + yahooPath + @"""/></td></tr>" +
+				"<tr><td>" + Resources.Instance.GetString("UpdateFreq") + "</td><td>" +
+					@"<input name=""UpdateFreq"" size=""4"" value=""" + updateFreq.ToString() + @"""/>" +
+						Resources.Instance.GetString("Hours") + "</td></tr>" +
+				"<tr><td>" + Resources.Instance.GetString("Language") + "</td><td>" + languages + "</td></tr>" +
+				@"</table><input type=""submit"" value=""" + Resources.Instance.GetString("SaveSettings") + @""" /></form>";
+			return strOutput;
 		}
 	}
 }

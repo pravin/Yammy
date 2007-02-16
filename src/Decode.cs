@@ -21,8 +21,6 @@ using System.IO;
 using System.Collections.Specialized;
 using System.Text;
 
-using Yammy.Properties;
-
 namespace Yammy
 {
 	class Decode
@@ -77,30 +75,30 @@ namespace Yammy
 						Decoder d = new Decoder(fileName);
 						sbDecode.Append(d.Decode(false, true));
 						sbDecode.AppendFormat("<p>[<a href=\"/decode?localuser={0}&type=i&remoteuser={1}&fname={2}\">{3}</a>]</p>",
-							localUser, remoteUser, Path.GetFileNameWithoutExtension(fileName), Resources.More);
+							localUser, remoteUser, Path.GetFileNameWithoutExtension(fileName), Resources.Instance.GetString("More"));
 					}
 					sbDecode.Append("<div class=\"page-nav\">");
 
 					if (start > 0)
 					{
 						sbDecode.AppendFormat("<a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\">{3}</a>",
-							localUser, remoteUser, start - PREVIEW_NUMBER, Resources.PrevPage);
+							localUser, remoteUser, start - PREVIEW_NUMBER, Resources.Instance.GetString("PrevPage"));
 					}
 					else
 					{
-						sbDecode.Append("<span class=\"disabled-button\">" + Resources.PrevPage + "</span>");
+						sbDecode.Append("<span class=\"disabled-button\">" + Resources.Instance.GetString("PrevPage") + "</span>");
 					}
 					if (end < files.Length)
 					{
 						sbDecode.AppendFormat(" <a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\">{3}</a>",
-							localUser, remoteUser, start + PREVIEW_NUMBER, Resources.NextPage);
+							localUser, remoteUser, start + PREVIEW_NUMBER, Resources.Instance.GetString("NextPage"));
 					}
 					else
 					{
-						sbDecode.Append(" <span class=\"disabled-button\">" + Resources.NextPage + "</span>");
+						sbDecode.Append(" <span class=\"disabled-button\">" + Resources.Instance.GetString("NextPage") + "</span>");
 					}
 					sbDecode.AppendFormat(" <span class=\"red-button\"><a href=\"/export?localuser={0}&type=i&remoteuser={1}\">{2}</a></span>",
-							localUser, remoteUser, Resources.ExportConvos);
+							localUser, remoteUser, Resources.Instance.GetString("ExportConvos"));
 					sbDecode.Append("</div>");
 					strDecode = sbDecode.ToString();
 				}
