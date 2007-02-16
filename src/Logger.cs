@@ -46,7 +46,7 @@ namespace Yammy
 			m_objStreamWriter = new StreamWriter(strLogPath, false, Encoding.UTF8);
 			m_objStreamWriter.WriteLine("<h1>Yammy log file [" + DateTime.Now.ToLongDateString() + "]</h1>");
 
-			m_timer = new Timer(new TimerCallback(Flush), null, 0, 1000 * 60); // Once a minute, flush log
+			m_timer = new Timer(new TimerCallback(Flush), null, 0, 1000); // Flush log every second
 		}
 
 		public void Dispose()

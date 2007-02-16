@@ -96,15 +96,14 @@ namespace Yammy
 		/// <summary>
 		/// Fills in variables from the config file
 		/// Variables are:
-		/// - IndexPath
 		/// - IndexUpdateFreq
-		/// - YahooProfilesPath
-		/// - IndexLastUpdated
+		/// - Language
 		/// </summary>
 		private void ReadConfig()
 		{
 			// Set default values
 			m_iIndexUpdateFrequency = 24;
+			m_strLocale = "en-US";
 
 			if (!File.Exists(m_strConfigFilePath))
 				return;
@@ -162,7 +161,7 @@ namespace Yammy
 						}
 						catch
 						{
-							m_strLocale = "en";
+							m_strLocale = "en-US";
 						}
 						break;
 					default:
@@ -304,22 +303,12 @@ namespace Yammy
 
 		public string DoSettings(NameValueCollection queryString)
 		{
-			string yahooPath;
 			int updateFreq;
 
 			string[] locales = Directory.GetFiles(@"Webroot", "*.js");
 
 			if (queryString != null)
 			{
-				yahooPath = Uri.EscapeDataString(queryString["YahooPath"]);
-				if (Directory.Exists(yahooPath))
-				{
-					m_strYahooProfilesPath = yahooPath;
-				}
-				else
-				{
-					Logger.Instance.LogDebug("Settings: " + yahooPath + " does not exist");
-				}
 				string updateFrequency = Uri.EscapeDataString(queryString["UpdateFreq"]);
 				try
 				{
@@ -338,7 +327,6 @@ namespace Yammy
 				SaveConfig();
 			}
 
-			yahooPath = m_strYahooProfilesPath;
 			updateFreq = m_iIndexUpdateFrequency;
 
 			string languages = @"<select name=""Language"">";
@@ -364,10 +352,8 @@ namespace Yammy
 
 			string strOutput = @"<form action=""/settings"" method=""GET"">" +
 				@"<table border=""0"" cellspacing=""2"" cellpadding=""5"">" +
-				"<tr><td>" + Resources.Instance.GetString("YahooPath") + "</td><td>" +
-					@"<input name=""YahooPath"" value=""" + yahooPath + @"""/></td></tr>" +
 				"<tr><td>" + Resources.Instance.GetString("UpdateFreq") + "</td><td>" +
-					@"<input name=""UpdateFreq"" size=""4"" value=""" + updateFreq.ToString() + @"""/>" +
+					@"<input type=""text"" name=""UpdateFreq"" size=""4"" value=""" + updateFreq.ToString() + @"""/>" +
 						Resources.Instance.GetString("Hours") + "</td></tr>" +
 				"<tr><td>" + Resources.Instance.GetString("Language") + "</td><td>" + languages + "</td></tr>" +
 				@"</table><input type=""submit"" value=""" + Resources.Instance.GetString("SaveSettings") + @""" /></form>";
