@@ -94,14 +94,32 @@ td {
 }
 
 .content h1 {
-	font-size:12pt;
+	font-size:14pt;
 	color:#390;
-	border:0;
-	border-bottom:1px solid #390;
+}
+
+.content h2 {
+	font-size:12pt;
+	color:#930;
+}
+
+.content dt {
+	color:#039;
 }
 
 .search-box {
+	float:right;
+}
 
+.search-box input {
+	background-color:#444;
+	color:#ccc;
+	border:1px solid #666;
+}
+
+.search-box input:focus {
+	border:1px solid #999;
+	background-color:#555;
 }
 
 .cascade {
