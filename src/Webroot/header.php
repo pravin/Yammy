@@ -9,20 +9,22 @@
 <div class="wrapper"><div class="container">
 	<div class="header">
 		<div class="search-box">
-			<form action="/search" method="post">
+			<form action="/search" method="get">
 				<input name="query" />
 				<script type="text/javascript">
-				document.write('<input type="submit" value="' + Search + '" />');
+					document.write('<input type="submit" value="' + Search + '" />');
 				</script>
 			</form>
 		</div>
-		<h1><a href="http://yammy.sourceforge.net">Yammy 0.9</a></h1>Yahoo Messenger archives decoder
+		<h1><a href="/">Yammy 0.9</a></h1>Yahoo Messenger archives decoder
 	</div>
 	<div class="nav-bar">
 	<ul>
-		<li><a href="/" title="Main Screen">Main</a></li>
-		<li><a href="/settings" title="Change Settings">Settings</a></li>
-		<li><a href="/help" title="Help">Help</a></li>
-		<li><a href="/log" title="View Log">View Log</a></li>
+	<script type="text/javascript">
+		document.write('<li><a href="/" title="' + Home + '">' + Home + '</a></li>');
+		document.write('<li><a href="/settings" title="' + Settings + '">' + Settings + '</a></li>');
+		document.write('<li><a href="/help" title="' + Help + '">' + Help + '</a></li>');
+		document.write('<li><a href="/log" title="' + ViewLog + '">' + ViewLog + '</a></li>');
+	</script>
 	</ul>
 	</div>
