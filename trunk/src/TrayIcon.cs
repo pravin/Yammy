@@ -47,6 +47,8 @@ namespace Yammy
 			m_trayIcon.Icon = Yammy.Properties.Resources.MainIcon;
 			m_trayIcon.ContextMenu = m_contextMenu;
 			m_trayIcon.MouseDoubleClick += new MouseEventHandler(OnDoubleClick);
+			
+			OnDoubleClick(null, null); // Open main page in browser
 		}
 
 		/// <summary>
