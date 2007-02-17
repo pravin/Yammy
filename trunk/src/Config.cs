@@ -193,7 +193,7 @@ namespace Yammy
 			writer.WriteLine(ConstIndexLastUpdated + "=" + m_dtIndexLastUpdated);
 			writer.WriteLine(ConstIndexUpdateFrequency + "=" + m_iIndexUpdateFrequency);
 			writer.WriteLine(ConstLocale + "=" + m_strLocale);
-			writer.Close(); writer = null;
+			writer.Flush(); writer.Close(); writer = null;
 		}
 
 		/// <summary>
@@ -322,7 +322,8 @@ namespace Yammy
 				string language = Uri.EscapeDataString(queryString["Language"]);
 				if (language != m_strLocale)
 				{
-					Resources.Instance.LoadVars(Path.Combine(@"Webroot\", m_strLocale + ".js"));
+					Resources.Instance.LoadVars(Path.Combine(@"Webroot\", language + ".js"));
+					m_strLocale = language;
 				}
 				SaveConfig();
 			}
@@ -340,7 +341,7 @@ namespace Yammy
 					CultureInfo culture = CultureInfo.GetCultureInfo(localeName);
 					languages += "<option value='" + localeName +
 						(localeName == m_strLocale ? "' selected='selected" : string.Empty) +
-						"'>" + culture.DisplayName + "</option>";
+						"'>" + culture.NativeName + "</option>";
 				}
 				catch (Exception e)
 				{
@@ -350,10 +351,11 @@ namespace Yammy
 
 			languages += "</select>";
 
-			string strOutput = @"<form action=""/settings"" method=""GET"">" +
+			string strOutput = "<h1>" + Resources.Instance.GetString("Settings") + "</h1>" +
+				@"<form action=""/settings"" method=""GET"">" +
 				@"<table border=""0"" cellspacing=""2"" cellpadding=""5"">" +
 				"<tr><td>" + Resources.Instance.GetString("UpdateFreq") + "</td><td>" +
-					@"<input type=""text"" name=""UpdateFreq"" size=""4"" value=""" + updateFreq.ToString() + @"""/>" +
+					@"<input type=""text"" name=""UpdateFreq"" size=""4"" value=""" + updateFreq.ToString() + @"""/> " +
 						Resources.Instance.GetString("Hours") + "</td></tr>" +
 				"<tr><td>" + Resources.Instance.GetString("Language") + "</td><td>" + languages + "</td></tr>" +
 				@"</table><input type=""submit"" value=""" + Resources.Instance.GetString("SaveSettings") + @""" /></form>";

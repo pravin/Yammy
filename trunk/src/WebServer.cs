@@ -485,7 +485,6 @@ namespace Yammy
 		/// <param name="errMessage">Message</param>
 		void SendErrorResponse(ref Socket sock, HttpResponseCode status, string errMessage)
 		{
-			StreamReader reader;
 			string strErrorPage;
 			try
 			{
