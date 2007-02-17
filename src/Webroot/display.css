@@ -104,7 +104,8 @@ td {
 }
 
 .content dt {
-	color:#039;
+	color:#306;
+	font-weight:bold;
 }
 
 .search-box {
