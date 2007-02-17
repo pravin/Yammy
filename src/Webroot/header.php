@@ -3,6 +3,7 @@
 	<title>Yammy 0.9: <$PageTitle$></title>
 	<link rel="stylesheet" type="text/css" href="display.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="print.css" media="print" />
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	<script src="<$LocaleString$>.js" type="text/javascript"></script>
 </head>
 <body>
