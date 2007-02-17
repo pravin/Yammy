@@ -44,3 +44,5 @@ A project isn't just about a bunch of coders. It's the users that take it out in
 <dt>HeyItsMe</dt>
 	<dd>For constantly prodding me to get off my bottom and release the next version already. I would've quit at 0.7 if it weren't for him. And also for his really neat ideas and feature-requests. He has been, without doubt, the most active user.</dd>
 </dl>
+
+<em>(Translated into English by Pravin Paratey)</em>
