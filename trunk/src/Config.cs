@@ -103,7 +103,7 @@ namespace Yammy
 		{
 			// Set default values
 			m_iIndexUpdateFrequency = 24;
-			m_strLocale = "en-US";
+			m_strLocale = "en";
 
 			if (!File.Exists(m_strConfigFilePath))
 				return;
@@ -161,7 +161,7 @@ namespace Yammy
 						}
 						catch
 						{
-							m_strLocale = "en-US";
+							m_strLocale = "en";
 						}
 						break;
 					default:
@@ -338,6 +338,8 @@ namespace Yammy
 					int start = locale.IndexOf(Path.DirectorySeparatorChar) + 1;
 					int end = locale.IndexOf('.') - 1;
 					string localeName = locale.Substring(start, end - start + 1);
+					// TODO:? Add a try/catch block here so that if GetCultureInfo fails
+					// we can still show the option
 					CultureInfo culture = CultureInfo.GetCultureInfo(localeName);
 					languages += "<option value='" + localeName +
 						(localeName == m_strLocale ? "' selected='selected" : string.Empty) +
