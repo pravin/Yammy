@@ -1,4 +1,4 @@
-<h1>Help</h1>
+﻿<h1>Help</h1>
 <h2>What's new?</h2>
 <ol>
 	<li>New, more intuitive UI.</li>

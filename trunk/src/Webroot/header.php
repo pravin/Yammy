@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 <head>
 	<title>Yammy 0.9: <$PageTitle$></title>
 	<link rel="stylesheet" type="text/css" href="display.css" media="screen" />
