@@ -338,7 +338,7 @@ namespace Yammy
 					string helpfname = Path.Combine(m_strWebRoot, "help_" + Config.Instance.Locale + ".php");
 					if(!File.Exists(helpfname))
 					{
-						helpfname = Path.Combine(m_strWebRoot, "help_en-US.php");
+						helpfname = Path.Combine(m_strWebRoot, "help_en.php");
 					}
 					responseData = Encoding.UTF8.GetBytes(
 						ConstructHTML(Resources.Instance.GetString("Help"), Common.ReadTextFile(helpfname))

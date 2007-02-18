@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Yammy")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Pravin Paratey")]
 [assembly: AssemblyProduct("Yammy")]
 [assembly: AssemblyCopyright("Copyright (c) 2005-2006")]
 [assembly: AssemblyTrademark("")]
