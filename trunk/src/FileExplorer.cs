@@ -193,7 +193,7 @@ namespace Yammy
 							{
 								Logger.Instance.LogDebug("Indexing: " + archive);
 								Decoder d = new Decoder(archive);
-								string strMessage = d.Decode(true, false);
+								string strMessage = d.Decode(true, false, null);
 								IndexInfo info = new IndexInfo(d.LocalID, d.RemoteID, strMessage, archive);
 								m_indexer.AddDocument(info);
 								if (!m_bAgressive)

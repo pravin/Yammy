@@ -124,8 +124,9 @@ namespace Yammy
 		/// </summary>
 		/// <param name="raw">If true, format for output for Indexing, else for Display</param>
 		/// <param name="preview">If true, only first 3 lines are returned</param>
+		/// <param name="highlight">Terms to highlight</param>
 		/// <returns>Decoded string if successful, else null</returns>
-		public string Decode(bool raw, bool preview)
+		public string Decode(bool raw, bool preview, string highlight)
 		{
 			if (!m_bSucceeded)
 				return null;
@@ -147,6 +148,7 @@ namespace Yammy
 			byte[] buffer = new byte[512];
 
 			int lineCount = 0;
+			bool searchAnchorAdded = false; // will be set to true when #anchor is added
 			while (br.PeekChar() != -1)
 			{
 				Int32 endMarker;
@@ -190,6 +192,16 @@ namespace Yammy
 				string strCleanData = CleanData(buffer);
 				if (!raw)
 					strCleanData = Emote.Instance.Emotify(strCleanData);
+				if (highlight != null)
+				{
+					string tmpCleanData = strCleanData.Replace(highlight, "<span class='hi'>" + highlight + "</span>");
+					if (!searchAnchorAdded && strCleanData.Length != tmpCleanData.Length) // strings have changed
+					{
+						tmpCleanData = tmpCleanData.Replace(highlight, "<a name='anchor'>" + highlight + "</a>");
+						searchAnchorAdded = true;
+					}
+					strCleanData = tmpCleanData;
+				}
 				string strTime = MakeDTFromCTime(timeStamp).ToLongTimeString();
 
 				if (!raw)

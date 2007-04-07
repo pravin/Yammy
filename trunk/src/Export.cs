@@ -112,7 +112,7 @@ namespace Yammy
 							foreach (string file in files)
 							{
 								Decoder d = new Decoder(file);
-								sw.WriteLine(d.Decode(false, false));
+								sw.WriteLine(d.Decode(false, false, null));
 							}
 							sw.WriteLine(m_strFooter);
 						}
@@ -135,7 +135,7 @@ namespace Yammy
 							sw = new StreamWriter(outputFileName);
 							Decoder d = new Decoder(path);
 							sw.Write(m_strHeader.Replace("<$PageTitle$>", "TODO"));
-							sw.Write(d.Decode(false, false));
+							sw.Write(d.Decode(false, false, null));
 							sw.Write(m_strFooter);
 						}
 						catch (Exception ex)

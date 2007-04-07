@@ -3,7 +3,7 @@
  * Email: pravinp(at)gmail[dot]com
  */
 body {
-	font-family:trebuchet ms, sans serif;
+	font-family: "Trebuchet MS", "sans serif";
 	font-size:10pt;
 	text-align:center;
 	line-height:150%;
@@ -284,4 +284,10 @@ td {
 	border:0;
 	border-top:1px solid #ee6;
 	border-bottom:1px solid #ee6;
+}
+
+.hi {
+	background-color:#ff6;
+	font-weight:bold;
+	color:#f33;
 }
