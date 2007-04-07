@@ -151,7 +151,7 @@ namespace Yammy
 
 				if (strEmote.Length != 0)
 				{
-					sb.Append("<img src=\"/images/" + htEmotes[strEmote] + ".gif" + "\" alt=\"" + strEmote + "\"/>");
+					sb.Append("<img src=\"/images/" + htEmotes[strEmote] + ".gif" + "\" alt='" + strEmote + "'/>");
 					i += strEmote.Length - 1;
 				}
 				else
