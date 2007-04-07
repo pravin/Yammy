@@ -32,6 +32,7 @@ namespace Yammy
 			string remoteUser = queryString["remoteuser"];
 			string fname = queryString["fname"];
 			string page = queryString["page"];
+			string highlight = queryString["hi"];
 			const int PREVIEW_NUMBER = 5;
 
 			string strDecode = string.Empty;
@@ -73,7 +74,7 @@ namespace Yammy
 						sbDecode.Append("<div class=\"date\">" + strPrettyDate + "</div>");
 
 						Decoder d = new Decoder(fileName);
-						sbDecode.Append(d.Decode(false, true));
+						sbDecode.Append(d.Decode(false, true, null));
 						sbDecode.AppendFormat("<p>[<a href=\"/decode?localuser={0}&type=i&remoteuser={1}&fname={2}\">{3}</a>]</p>",
 							localUser, remoteUser, Path.GetFileNameWithoutExtension(fileName), Resources.Instance.GetString("More"));
 					}
@@ -115,7 +116,13 @@ namespace Yammy
 						localUser + "'>" + localUser + "</a> &raquo; <a href='/decode?localuser=" + localUser +
 						"&remoteuser=" + remoteUser + "&type=i'>" + remoteUser + "</a> &raquo; " + 
 						Common.GetDateTimeFromYYYYMMDD(fname.Substring(0,8)).ToShortDateString() + "</div>";
-				strDecode += d.Decode(false, false);
+				
+				if (highlight != null) // Highlight search term if we came from the search page
+				{
+					highlight = Uri.UnescapeDataString(highlight);
+					highlight = highlight.Replace('+', ' '); // clean highlight
+				}
+				strDecode += d.Decode(false, false, highlight);
 			}
 			return strDecode;
 		}

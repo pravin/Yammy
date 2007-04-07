@@ -67,7 +67,8 @@ namespace Yammy
 				{
 					sb.Append("<li><a href=\"/decode?localuser=" + result.LocalUser +
 						"&remoteuser=" + result.RemoteUser + 
-						"&type=i&fname=" + System.IO.Path.GetFileNameWithoutExtension(result.Location) + "\">" +
+						"&type=i&fname=" + System.IO.Path.GetFileNameWithoutExtension(result.Location) + 
+						"&hi=" + Uri.EscapeDataString(searchTerm) + "#anchor\">" +
 						string.Format(Resources.Instance.GetString("ConversationBetween"), result.LocalUser, result.RemoteUser) +
 						"</a><br />" + GetExcerpt(result.Message, searchTerm) + "</li>");
 				}
@@ -151,7 +152,7 @@ namespace Yammy
 		/// <returns>string with the search terms in bold</returns>
 		public static string Boldify(Match m)
 		{
-			return "<b style='background:#ff6'>" + m.Value + "</b>";
+			return "<span class='hi'>" + m.Value + "</span>";
 		}
 	}
 }
