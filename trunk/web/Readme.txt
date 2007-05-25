@@ -1,1 +1,0 @@
-This folder contains the wordpress theme for yammy.sf.net
