@@ -1,0 +1,254 @@
+/*
+	Copyright (c) Pravin Paratey
+*/
+body {
+	font-family:"DejaVu Sans Condensed", Calibri, "Lucida Sans Unicode", "Gill Sans Light", Sans serif;
+	font-size:11pt;
+	background-image:url('/img/bg.gif');
+	text-align:center;
+	line-height:150%;
+	margin:0;
+}
+
+a {
+	color:#04a;
+}
+
+h1, h2, h3 {
+	font-weight:normal;
+}
+
+h1 {
+	font-size:15pt;
+	color:#5a2;
+	padding-bottom:5px;margin-bottom:5px;
+}
+
+h2 {
+	font-size:13pt;
+	color:#f60;
+}
+
+h3 {
+	font-size:11pt;
+	color:#250;
+}
+
+#wrapper {
+	background-color:#fff;
+	color:#222;
+	padding:10px 60px 20px 60px;
+	width:540px;
+	_width:660px;
+	margin:0 auto;
+	text-align:left;
+}
+
+#topbar {
+	margin:0 auto;
+	padding:10px 60px 10px 60px;
+	background-color:#111;
+	border-bottom:2px solid #fc0;
+	color:#eee;
+	width:540px;
+	_width:660px;
+	text-align:left;
+}
+
+#topbar a {
+	text-decoration:none;
+	padding:10px;
+	color:#ccc;
+}
+#topbar  img {
+	border:0;
+	vertical-align:middle;
+}
+
+#topbar a:hover {
+	color:#99f;
+}
+
+#hdr {
+	text-align:center;
+	padding:20px 0 20px 0;
+}
+#hdr img {
+	border:0;
+}
+
+#ftr {
+	margin:0 auto;
+	padding:10px 60px 10px 60px;
+	background-color:#111;
+	border-top:2px solid #f33;
+	color:#ccc;
+	width:540px;
+	_width:660px;
+	text-align:center;
+	font-size:9pt;
+	clear:both;
+}
+
+#ftr img {
+	vertical-align:middle;
+}
+
+#ftr a{
+	color:#9cf;
+	text-decoration:none;
+}
+
+h2 small {
+	font-size:9pt;
+	color:#999;
+}
+
+/* -- Std Html modifiers -- */
+ul {
+	padding-left:20px;
+	margin:0;
+}
+
+ul li {
+	padding-left:12px;
+	list-style:none;
+	background:url('/img/bullet.gif') 0 8px no-repeat;
+}
+
+pre {
+	font-size:9pt;
+	line-height:120%;
+}
+
+code {
+	font-size:10pt;
+	color:#830;
+}
+
+code.fname {
+	font-style:italic;
+	border-bottom:1px #fc0 dotted;
+}
+
+strike {
+	color:#633;
+}
+
+blockquote {
+	background-image:url('/img/quote.gif');
+	background-repeat:no-repeat;
+	padding-left:60px;
+	padding-right:60px;
+	margin:0;
+}
+
+/* -- Classes -- */
+.exercise, .info, .tip {
+	background:url('/img/exercise.png') 4px 4px no-repeat;
+	padding-left:48px;
+	border-left:2px solid #fea;
+}
+
+.tip {
+	background-image:url('/img/tip.png');
+}
+
+.info {
+	background-image:url('/img/info.png');
+}
+
+/* -- Download Link -- */
+.dl {
+	background:url('/img/dl.gif') 0 0 no-repeat;
+	padding-left:30px;
+	font-size:13pt;
+	height:32px;
+}
+/* -- Forums Link -- */
+.fi {
+	background:url('/img/forums.png') 0 0 no-repeat;
+	padding-left:30px;
+	font-size:13pt;
+	height:32px;
+}
+
+/* -- Bottom Navigation -- */
+.nav {
+	text-align:right;
+	min-height:24px;
+}
+
+.nav-bak {
+	float:left;
+	background:url('/img/lft.gif') 0 0 no-repeat;
+	padding-left:32px;
+}
+
+.nav-fwd {
+	background:url('/img/rgt.gif') 100% 0 no-repeat;
+	padding-right:32px;
+}
+
+
+/* -- Code Highlighting --*/
+.wp_syntax { 
+  color: #100;
+  background-color: #f9f9f9;
+  border: 1px solid silver;
+  margin: 0 0 1.5em 0;
+  overflow: auto;
+}
+
+/* IE FIX */
+.wp_syntax { 
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: expression(this.scrollWidth > this.offsetWidth ? 15 : 0);
+  _width:540px;
+}
+
+.wp_syntax table {
+  border-collapse: collapse;
+}
+
+.wp_syntax .wp_syn_hdr {
+	background-color:#def;
+	color:#666;
+	text-align:center;
+	border-bottom:1px dotted silver;
+}
+
+.wp_syntax div, .wp_syntax td { 
+  vertical-align: top;
+  padding: 2px 4px;
+}
+
+.wp_syntax .line_numbers {
+  text-align: right;
+  background-color: #def;
+  color: gray;
+  overflow: visible;
+}
+
+/* potential overrides for other styles */
+.wp_syntax pre {
+  margin: 0;
+  width: auto;
+  float: none;
+  clear: none;
+  overflow: visible;
+}
+
+.right-me {
+	text-align:right;
+}
+
+/* -- News -- */
+.post {
+	background:url('/img/hr.gif') 50% 100% no-repeat;
+}
+.post h2 {
+	padding-left:32px;
+	background:url('/img/post.gif') 0 2px no-repeat;
+}
