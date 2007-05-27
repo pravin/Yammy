@@ -48,6 +48,7 @@ namespace Yammy
 		private string m_strTempIndexPath;
 		private string m_strIndexPath;
 		private string m_strYahooProfilesPath;
+		private string m_strCachePath;
 		private int m_iIndexUpdateFrequency;
 		private DateTime m_dtIndexLastUpdated;
 		private ArrayList m_arUserList;
@@ -81,7 +82,12 @@ namespace Yammy
 				m_strConfigFilePath = Path.Combine(m_strYammyAppData, "config.ini");
 				m_strTempIndexPath = Path.Combine(m_strYammyAppData, "TempIndex");
 				m_strIndexPath = Path.Combine(m_strYammyAppData, "Index");
+				m_strCachePath = Path.Combine(WebServer.Instance.WebRoot, "Cache");
 				m_arUserList = new ArrayList(4);
+				if (!Directory.Exists(m_strCachePath))
+				{
+					Directory.CreateDirectory(m_strCachePath);
+				}
 			}
 			catch (IOException e)
 			{
@@ -283,6 +289,14 @@ namespace Yammy
 		{
 			get { return m_iIndexUpdateFrequency; }
 			set { m_iIndexUpdateFrequency = value; }
+		}
+		/// <summary>
+		/// Gets/Sets the path where user avatars are cached
+		/// </summary>
+		public string CachePath
+		{
+			get { return m_strCachePath; }
+			set { m_strCachePath = value; }
 		}
 		/// <summary>
 		/// Gets a list of all yahoo messenger users from the windows registry.

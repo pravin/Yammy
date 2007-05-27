@@ -164,10 +164,10 @@ namespace Yammy
 				totalConversations += files.Length;
 				sb.AppendFormat(
 @"<div class=""cascade"">
-	<div class=""avatar""><a href=""/decode?localuser={0}&remoteuser={1}&type=i""><img src=""/images/generic.png"" width=96 height=96 /></a></div>
+	<div class=""avatar""><a href=""/decode?localuser={0}&remoteuser={1}&type=i""><img src=""{2}"" width=96 height=96 /></a></div>
 	<div class=""desc"">
 		<h2><a href=""/decode?localuser={0}&remoteuser={1}&type=i"">{1}</a></h2>
-		<em>", localUser, Path.GetFileNameWithoutExtension(remoteuser));
+		<em>", localUser, Path.GetFileNameWithoutExtension(remoteuser), NetServices.GetUserIcon(Path.GetFileNameWithoutExtension(remoteuser)));
 
 				sb.AppendFormat(Resources.Instance.GetString("TotalConvos"), totalConversations);
 				sb.Append("</em><br /><em>");

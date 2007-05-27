@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 using System;
+using System.Threading;
 using System.Collections;
 using System.Windows.Forms;
 
@@ -50,8 +52,14 @@ namespace Yammy
 
 			MemoryManagement.Start();
 
+			// Start the remoteuser icon caching process
+			Thread t = new Thread(new ThreadStart(NetServices.FetchIcons));
+			t.Name = "Remote Avatarizer";
+			t.Start();
+
 			Application.Run();
 
+			t.Abort();
 			fileExplorer.Stop();
 			WebServer.Instance.Stop();
 			MemoryManagement.KillThread();
