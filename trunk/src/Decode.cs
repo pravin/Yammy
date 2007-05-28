@@ -45,6 +45,8 @@ namespace Yammy
 						"<div class='crumb'><a href='/'>Users</a> &raquo; <a href='/show?localuser=" +
 						localUser + "'>" + localUser + "</a> &raquo; " + remoteUser + "</div>" +
 						"<h1>Conversations between " + localUser + " and " + remoteUser + "</h1>");
+					sbDecode.Append("<div class='tinyavatar'><img src='" + NetServices.GetUserIcon(remoteUser) +
+						"' alt='" + remoteUser + "'/></div>");
 					string dirName = Common.ConstructPath(localUser, type, remoteUser, string.Empty);
 					string[] files = Directory.GetFiles(dirName);
 
@@ -82,24 +84,24 @@ namespace Yammy
 
 					if (start > 0)
 					{
-						sbDecode.AppendFormat("<a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\">{3}</a>",
+						sbDecode.AppendFormat("<a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\" class=\"prev\">{3}</a>",
 							localUser, remoteUser, start - PREVIEW_NUMBER, Resources.Instance.GetString("PrevPage"));
 					}
 					else
 					{
-						sbDecode.Append("<span class=\"disabled-button\">" + Resources.Instance.GetString("PrevPage") + "</span>");
+						sbDecode.Append("<a class=\"prev\">" + Resources.Instance.GetString("PrevPage") + "</a>");
 					}
 					if (end < files.Length)
 					{
-						sbDecode.AppendFormat(" <a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\">{3}</a>",
+						sbDecode.AppendFormat(" <a href=\"/decode?localuser={0}&type=i&remoteuser={1}&page={2}\" class=\"next\">{3}</a>",
 							localUser, remoteUser, start + PREVIEW_NUMBER, Resources.Instance.GetString("NextPage"));
 					}
 					else
 					{
-						sbDecode.Append(" <span class=\"disabled-button\">" + Resources.Instance.GetString("NextPage") + "</span>");
+						sbDecode.Append(" <a class=\"next\">" + Resources.Instance.GetString("NextPage") + "</a>");
 					}
-					sbDecode.AppendFormat(" <span class=\"red-button\"><a href=\"/export?localuser={0}&type=i&remoteuser={1}\">{2}</a></span>",
-							localUser, remoteUser, Resources.Instance.GetString("ExportConvos"));
+					//sbDecode.AppendFormat(" <span class=\"red-button\"><a href=\"/export?localuser={0}&type=i&remoteuser={1}\">{2}</a></span>",
+					//        localUser, remoteUser, Resources.Instance.GetString("ExportConvos"));
 					sbDecode.Append("</div>");
 					strDecode = sbDecode.ToString();
 				}

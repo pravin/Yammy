@@ -54,6 +54,21 @@ namespace Yammy
 				if (File.Exists(fileName))
 				{
 					userIconPath = "/cache/" + remoteUser + ".png";
+					FileInfo finfo = new FileInfo(fileName);
+					
+					// Refresh icons every 2 days
+					if (finfo.CreationTime < DateTime.Today.Subtract(new TimeSpan(2, 0, 0, 0, 0)))
+					{
+						// Push icon into queue
+						lock (m_queue)
+						{
+							m_queue.Enqueue(remoteUser);
+						}
+						lock (objMon)
+						{
+							Monitor.Pulse(objMon);
+						}
+					}
 				}
 				else
 				{
