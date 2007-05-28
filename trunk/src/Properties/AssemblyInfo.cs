@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Pravin Paratey")]
 [assembly: AssemblyProduct("Yammy")]
-[assembly: AssemblyCopyright("Copyright (c) 2005-2006")]
+[assembly: AssemblyCopyright("Copyright (c) 2005-2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,5 +47,5 @@ using System.Runtime.InteropServices;
 //	  Build Number
 //	  Revision
 //
-[assembly: AssemblyVersion("0.8.9.1")]
-[assembly: AssemblyFileVersion("0.8.9.1")]
+[assembly: AssemblyVersion("0.8.9.2")]
+[assembly: AssemblyFileVersion("0.8.9.2")]
