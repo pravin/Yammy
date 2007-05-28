@@ -78,7 +78,7 @@ namespace Yammy
 				string strNext = string.Empty;
 				if (searchResults.Length == SEARCHRESULTS_PER_PAGE)
 				{
-					strNext = string.Format("<a href=\"/search?query={0}&offset={1}\">{2}</a>", 
+					strNext = string.Format("<a href=\"/search?query={0}&offset={1}\" class=\"next\">{2}</a>", 
 						searchTerm, offset + SEARCHRESULTS_PER_PAGE, Resources.Instance.GetString("NextPage"));
 					moreResults = true;
 				}
@@ -86,14 +86,14 @@ namespace Yammy
 				string strPrev = string.Empty;
 				if (offset > SEARCHRESULTS_PER_PAGE-1)
 				{
-					strPrev = string.Format("<a href=\"/search?query={0}&offset={1}\">{2}</a>", 
+					strPrev = string.Format("<a href=\"/search?query={0}&offset={1}\" class=\"prev\">{2}</a>", 
 						searchTerm, offset - SEARCHRESULTS_PER_PAGE, Resources.Instance.GetString("PrevPage"));
 					moreResults = true;
 				}
 
 				if (moreResults)
 				{
-					sb.Append("<div>" + strPrev + " | " + strNext + "</div>");
+					sb.Append("<div class=\"page-nav\">" + strPrev + strNext + "</div>");
 				}
 			}
 			else // Advanced search

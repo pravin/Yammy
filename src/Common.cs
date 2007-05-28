@@ -117,8 +117,8 @@ namespace Yammy
 				sb.AppendFormat("<em>" + Resources.Instance.GetString("Archiving"), strArchivingStatus);
 				sb.AppendFormat(" | <a href='/{1}archiving?localuser={0}'>", 
 					user.LocalUser, user.ArchivingEnabled ? "disable" : "enable");
-				sb.Append(user.ArchivingEnabled ? Resources.Instance.GetString("ArchivingDisabled") : 
-						Resources.Instance.GetString("ArchivingEnabled"));
+				sb.Append(user.ArchivingEnabled ? Resources.Instance.GetString("ArchivingDisable") : 
+						Resources.Instance.GetString("ArchivingEnable"));
 				sb.Append("</a></em><br /></div></div>");
 			}
 

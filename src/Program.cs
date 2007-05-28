@@ -37,7 +37,19 @@ namespace Yammy
 			{
 				return;
 			}
-			Logger LOG = Logger.Instance;
+			Logger LOG = null;
+			try
+			{
+				LOG = Logger.Instance;
+			}
+			catch
+			{
+				// For some reason the named mutex way to determine
+				// if this app is already running, is not working
+				// This causes the Logger.Instance call to fail.
+				// Hence we are quitting ASSUMING Yammy is running already
+				return;
+			}
 			LOG.LogDebug("Starting Yammy");
 			LOG.LogDebug("Bringing up Webserver");
 			WebServer.Instance.Start();
@@ -76,6 +88,8 @@ namespace Yammy
 		{
 			bool bCreatedNew;
 			System.Threading.Mutex m = new System.Threading.Mutex(true, "YammyMutex", out bCreatedNew);
+			//if (bCreatedNew)
+			//    m.ReleaseMutex();
 			return !bCreatedNew;
 		}
 	}
