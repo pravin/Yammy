@@ -43,8 +43,11 @@ namespace Yammy
 			string[] localUsers = null;
 			try
 			{
-				localUsers = Directory.GetDirectories(strPath);
-				retVal = new LocalUserInfo[localUsers.Length];
+				if (Directory.Exists(strPath))
+				{
+					localUsers = Directory.GetDirectories(strPath);
+					retVal = new LocalUserInfo[localUsers.Length];
+				}
 			}
 			catch (Exception e)
 			{

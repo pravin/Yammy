@@ -50,7 +50,7 @@ namespace Yammy
 				IndexInfo[] searchResults = search.Search(searchTerm, offset);
 				if (searchResults == null)
 				{
-					return Resources.Instance.GetString("NoIndexFound");
+					return "<div class='hi'>" + Resources.Instance.GetString("NoIndexFound") + "</div>";
 				}
 				sb.Append("<h1>" + string.Format(Resources.Instance.GetString("SearchingFor"), searchTerm) + "</h1>");
 				if (searchResults.Length < 1)
