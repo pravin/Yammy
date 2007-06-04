@@ -211,6 +211,8 @@ namespace Yammy
 			// In registry, HKCU\Software\yahoo\pager\profiles\user,
 			// presence of All Identities means the user is a user and not a bad key
 			RegistryKey keyUserList = Registry.CurrentUser.OpenSubKey(@"Software\yahoo\pager\profiles");
+			if (keyUserList == null) // Yahoo Messenger not installed
+				return;
 			string[] strUserList = keyUserList.GetSubKeyNames();
 
 			byte[] iValue = new byte[8];
