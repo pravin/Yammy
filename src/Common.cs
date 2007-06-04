@@ -73,6 +73,8 @@ namespace Yammy
 				}
 			}
 			catch { }
+			if (!strProfilesPath.EndsWith("\\"))
+				strProfilesPath += "\\";
 			return strProfilesPath;
 		}
 
@@ -102,6 +104,12 @@ namespace Yammy
 			LocalUserInfo []users = YahooInfo.GetLocalUsers();
 
 			StringBuilder sb = new StringBuilder("<h1>" + Resources.Instance.GetString("Users") + "</h1>");
+			if (users == null)
+			{
+				sb.Append(@"<div class=""hi"">" + Resources.Instance.GetString("YahooNotInstalled") + "</div>");
+				return sb.ToString();
+			}
+
 			foreach (LocalUserInfo user in users)
 			{
 				string strArchivingStatus = user.ArchivingEnabled ?
