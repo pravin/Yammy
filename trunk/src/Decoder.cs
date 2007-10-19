@@ -256,10 +256,14 @@ namespace Yammy
 
 		private string CleanData(byte[] data)
 		{
-			string strData = Encoding.UTF8.GetString(data);
-			strData = Regex.Replace(strData, @"\[[^m]+m", String.Empty);
-			MatchEvaluator matchEval = new MatchEvaluator(CleanDataMatchEval);
-			strData = Regex.Replace(strData, "<([^>]+)>", matchEval);
+			string strData = string.Empty;
+			try
+			{
+				strData = Encoding.UTF8.GetString(data);
+				MatchEvaluator matchEval = new MatchEvaluator(CleanDataMatchEval);
+				strData = Regex.Replace(strData, "<([^>]+)>", matchEval);
+			}
+			catch { }
 			return strData;
 		}
 
