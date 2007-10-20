@@ -149,13 +149,25 @@ namespace Yammy
 
 			int lineCount = 0;
 			bool searchAnchorAdded = false; // will be set to true when #anchor is added
-			while (br.PeekChar() != -1)
+			while (true)
 			{
 				Int32 endMarker;
-				Int32 timeStamp = br.ReadInt32();
-				Int32 unknown = br.ReadInt32();
-				Int32 user = br.ReadInt32();
-				Int32 dataLength = br.ReadInt32();
+				Int32 timeStamp; 
+				Int32 unknown;
+				Int32 user;
+				Int32 dataLength;
+
+				try
+				{
+					timeStamp = br.ReadInt32();
+					unknown = br.ReadInt32();
+					user = br.ReadInt32();
+					dataLength = br.ReadInt32();
+				}
+				catch
+				{
+					break;
+				}
 
 				if (dataLength <= 0)
 				{
