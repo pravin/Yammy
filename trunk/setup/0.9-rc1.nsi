@@ -2,7 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "Yammy"
-!define PRODUCT_VERSION "0.9 RC1"
+!define PRODUCT_VERSION "0.9 RC2"
 !define PRODUCT_PUBLISHER "Pravin Paratey"
 !define PRODUCT_WEB_SITE "http://yammy.sf.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\Yammy.exe"
