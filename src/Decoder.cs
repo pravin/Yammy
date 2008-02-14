@@ -184,16 +184,24 @@ namespace Yammy
 						WriteConvoStarted(sb, timeStamp);
 				}
 				// Check if we have a big enough buffer
-				if (dataLength > buffer.Length)
-				{
-					buffer = new byte[dataLength];
-				}
+                //if (dataLength > buffer.Length)
+                //{
+                //    buffer = new byte[dataLength];
+                //}
 
-				buffer = br.ReadBytes(dataLength);
+                try
+                {
+                    buffer = br.ReadBytes(dataLength);
+                }
+                catch (EndOfStreamException e)
+                {
+                    Logger.Instance.LogException(e);
+                    return string.Empty;
+                }
 
 				// Decode
 				int pointer = 0;
-				for (int i = 0; i < dataLength; i++)
+				for (int i = 0; i < buffer.Length; i++)
 				{
 					buffer[i] = (byte)(buffer[i] ^ m_strEncryptID[pointer]);
 					pointer++;
