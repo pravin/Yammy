@@ -133,11 +133,15 @@ namespace Yammy
 
 			FileStream fs;
 			BinaryReader br;
+			long fileLength = 0;
+			long bytesRead = 0;
 			StringBuilder sb = new StringBuilder();
 
 			try
 			{
-				fs = File.OpenRead(m_strFilePath);
+				FileInfo finfo = new FileInfo(m_strFilePath);
+				fileLength = finfo.Length;
+				fs = finfo.OpenRead();
 				br = new BinaryReader(fs);
 			}
 			catch
@@ -183,21 +187,27 @@ namespace Yammy
 					if (!raw && !preview)
 						WriteConvoStarted(sb, timeStamp);
 				}
-				// Check if we have a big enough buffer
-                //if (dataLength > buffer.Length)
-                //{
-                //    buffer = new byte[dataLength];
-                //}
 
-                try
-                {
-                    buffer = br.ReadBytes(dataLength);
-                }
-                catch (EndOfStreamException e)
-                {
-                    Logger.Instance.LogException(e);
-                    return string.Empty;
-                }
+				try
+				{
+					// If .dat file is corrupt, dataLength can be any number. 
+					// Therefore sanity check
+					if (bytesRead + dataLength > fileLength)
+					{
+						Logger.Instance.LogError("dataLength exceeding fileLength in " + m_strFilePath);
+						break;
+					}
+					else
+					{
+						buffer = br.ReadBytes(dataLength);
+						bytesRead += dataLength;
+					}
+				}
+				catch (Exception e)
+				{
+					Logger.Instance.LogException(e);
+					return string.Empty;
+				}
 
 				// Decode
 				int pointer = 0;
