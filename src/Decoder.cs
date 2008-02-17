@@ -201,6 +201,7 @@ namespace Yammy
 					{
 						buffer = br.ReadBytes(dataLength);
 						bytesRead += dataLength;
+						bytesRead += 5 * sizeof(Int32); // includes sizeof endmarker too
 					}
 				}
 				catch (Exception e)
