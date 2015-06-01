@@ -15,7 +15,7 @@ Catalan, Dutch, French, Norwegian, Romanian, Spanish, Swedish, Tamil and Turkish
 You can download the source code to various versions from the download page. For 
 those with svn,
 
-	svn co https://yammy.svn.sourceforge.net/svnroot/yammy yammy
+    svn co https://yammy.svn.sourceforge.net/svnroot/yammy yammy
 
 ## Compiling
 
@@ -40,3 +40,28 @@ like to translate Yammy too?
 - Prof. Dr. Burak Cayir (Turkish)
 - Sérgio Gomes (Portuguese)
 - Viveka Nathan K (Tamil) 
+
+## Download
+
+Yammy 0.5 and up require the .NET Runtime. You can download it 
+[here](http://www.microsoft.com/downloads/details.aspx?FamilyId=262D25E3-F589-4842-8157-034D1E7CF3A3&displaylang=en)
+
+### Latest Beta
+
+- [Yammy 0.9 RC3 Installer](http://downloads.sourceforge.net/yammy/yammy-0.9rc3-setup.exe?download): This is a Beta version and requires the [.NET 2 Runtime](http://www.microsoft.com/downloads/details.aspx?FamilyID=0856eacb-4362-4b0d-8edd-aab15c5e04f5).
+
+### Latest Stable
+
+- [Yammy 0.7 Installer](http://prdownloads.sourceforge.net/yammy/yammy-0.7-setup.exe?download): This is the binary release. It includes an installer and uninstaller
+- [Yammy 0.7 Source Code](http://prdownloads.sourceforge.net/yammy/yammy-0.7-source.zip?download): Instructions on compiling Yammy from source can be found here.
+- [Yammy through CVS](http://cvs.sourceforge.net/viewcvs.py/yammy): Instructions on obtaining Yammy through CVS can be found [here](http://sourceforge.net/cvs/?group_id=135391).
+
+### Older Releases
+
+- [Yammy 0.6 Installer](http://prdownloads.sourceforge.net/yammy/yammy-0.6-setup.exe?download): This is the binary release. It includes an installer and uninstaller
+- [Yammy 0.5](http://prdownloads.sourceforge.net/yammy/yammy_0.5_setup.exe?download)
+- Yammy 0.4
+    - [Installer](http://prdownloads.sourceforge.net/yammy/yammy_setup.exe?download)
+    - [Zipped](http://prdownloads.sourceforge.net/yammy/Yammy.zip?download)
+    - [Source Code](http://prdownloads.sourceforge.net/yammy/Yammy_src.zip?download)
+- [Yammy 0.3](http://winsite.planetmirror.com/win95/netutil/yammy_setup.exe)
